@@ -1,0 +1,61 @@
+<!-- pages/admin-settings/admin-settings.wxml -->
+<view class="page">
+
+  <view class="card">
+    <view class="card-title">借阅规则</view>
+
+    <view class="form-item">
+      <view class="form-label">默认借阅期限（天）</view>
+      <input class="form-input" type="number" value="{{settings.borrowDays}}" data-field="borrowDays" bindinput="bindNum" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">每人可借数量（本）</view>
+      <input class="form-input" type="number" value="{{settings.maxBorrow}}" data-field="maxBorrow" bindinput="bindNum" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">可续借次数</view>
+      <input class="form-input" type="number" value="{{settings.renewTimes}}" data-field="renewTimes" bindinput="bindNum" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">逾期罚金（元/天）</view>
+      <input class="form-input" type="digit" value="{{settings.finePerDay}}" data-field="finePerDay" bindinput="bindNum" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">预约与注册</view>
+
+    <view class="form-item">
+      <view class="form-label">预约保留时长（小时）</view>
+      <input class="form-input" type="number" value="{{settings.reserveHours}}" data-field="reserveHours" bindinput="bindNum" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">到期提前提醒（天）</view>
+      <input class="form-input" type="number" value="{{settings.remindDays}}" data-field="remindDays" bindinput="bindNum" />
+    </view>
+
+    <view class="switch-row">
+      <view class="cell-main">
+        <view class="cell-title">允许预借</view>
+        <view class="cell-sub">关闭后用户无法预约已借出的图书</view>
+      </view>
+      <switch checked="{{settings.allowReserve}}" color="#4A6CF7" data-field="allowReserve" bindchange="bindSwitch" />
+    </view>
+
+    <view class="switch-row">
+      <view class="cell-main">
+        <view class="cell-title">开放新用户注册</view>
+        <view class="cell-sub">关闭后新读者无法加入书房</view>
+      </view>
+      <switch checked="{{settings.allowRegister}}" color="#4A6CF7" data-field="allowRegister" bindchange="bindSwitch" />
+    </view>
+  </view>
+
+  <view class="btn" bindtap="onSave">保存设置</view>
+  <view class="btn danger" bindtap="onReset">恢复默认</view>
+
+</view>

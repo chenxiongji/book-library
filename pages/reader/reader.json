@@ -1,0 +1,9 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "阅读",
+  "navigationBarBackgroundColor": "#F6F3EC",
+  "navigationBarTextStyle": "black",
+  "disableScroll": true,
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true
+}

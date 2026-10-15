@@ -1,0 +1,71 @@
+<!-- pages/library/library.wxml -->
+<view class="page">
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索图书、作者、ISBN" value="{{searchKeyword}}" bindinput="onSearchInput" confirm-type="search" />
+      <text class="search-clear" wx:if="{{searchKeyword}}" bindtap="onSearchClear">✕</text>
+    </view>
+    <view class="toolbar-btns">
+      <view class="toolbar-btn" bindtap="toggleViewMode">
+        <text>{{viewMode === 'grid' ? '☰' : '▦'}}</text>
+      </view>
+      <view class="toolbar-btn" bindtap="toggleSortMenu">
+        <text>⇅</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排序菜单 -->
+  <view class="sort-menu {{showSortMenu ? 'show' : ''}}" wx:if="{{showSortMenu}}">
+    <view class="sort-option {{sortBy === item.key ? 'active' : ''}}" wx:for="{{sortOptions}}" wx:key="key" data-key="{{item.key}}" bindtap="onSortSelect">
+      <text>{{item.name}}</text>
+      <text class="check" wx:if="{{sortBy === item.key}}">✓</text>
+    </view>
+  </view>
+
+  <!-- 类型筛选 -->
+  <view class="type-tabs">
+    <view class="type-tab {{activeType === item.key ? 'active' : ''}}" wx:for="{{typeTabs}}" wx:key="key" data-key="{{item.key}}" bindtap="onTypeTap">
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 分类滚动 -->
+  <scroll-view scroll-x class="category-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="category-tabs">
+      <view class="category-tab {{activeCategory === item.name ? 'active' : ''}}" wx:for="{{categories}}" wx:key="name" data-category="{{item.name}}" bindtap="onCategoryTap">
+        <text class="cat-icon">{{item.icon}}</text>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 图书列表 -->
+  <view class="books-container">
+    <!-- 空状态 -->
+    <empty-state wx:if="{{filteredBooks.length === 0}}" icon="📚" text="暂无符合条件的图书" subText="试试调整筛选条件或添加新书" actionText="去添加图书" bind:action="onAddBook" />
+
+    <!-- 网格模式 -->
+    <view class="books-grid" wx:if="{{viewMode === 'grid' && filteredBooks.length > 0}}">
+      <view class="grid-item" wx:for="{{filteredBooks}}" wx:key="id">
+        <book-card book="{{item}}" mode="grid" bind:booktap="onBookTap" bind:booklongpress="onBookLongPress" />
+      </view>
+    </view>
+
+    <!-- 列表模式 -->
+    <view class="books-list" wx:if="{{viewMode === 'list' && filteredBooks.length > 0}}">
+      <view class="list-item" wx:for="{{filteredBooks}}" wx:key="id">
+        <book-card book="{{item}}" mode="list" bind:booktap="onBookTap" bind:booklongpress="onBookLongPress" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 悬浮添加按钮 -->
+  <view class="fab-btn" bindtap="onAddBook">
+    <text class="fab-icon">+</text>
+  </view>
+
+</view>

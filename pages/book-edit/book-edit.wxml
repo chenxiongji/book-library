@@ -1,0 +1,83 @@
+<!-- pages/book-edit/book-edit.wxml - 修改图书 -->
+<view class="page">
+
+  <!-- 图书类型标识 -->
+  <view class="type-banner {{bookType === 'electronic' ? 'is-electronic' : ''}}">
+    <text>{{bookType === 'electronic' ? '📱 电子书' : '📖 纸质书'}}</text>
+    <text class="file-info" wx:if="{{fileInfo}}">{{fileInfo}}</text>
+  </view>
+
+  <view class="form-card">
+    <view class="section-title">基本信息</view>
+
+    <!-- ISBN（只读） -->
+    <view class="form-item form-item-readonly" wx:if="{{bookForm.isbn}}">
+      <text class="form-label">ISBN</text>
+      <text class="form-readonly-value">{{bookForm.isbn}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">书名 <text class="required">*</text></text>
+      <input class="form-input" placeholder="请输入书名" value="{{bookForm.title}}" data-field="title" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">作者 <text class="required">*</text></text>
+      <input class="form-input" placeholder="请输入作者" value="{{bookForm.author}}" data-field="author" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">分类</text>
+      <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
+        <view class="form-picker"><text>{{bookForm.category}}</text><text class="picker-arrow">›</text></view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">封面</text>
+      <view class="cover-picker" bindtap="onChooseCover">
+        <image wx:if="{{bookForm.cover}}" class="cover-preview" src="{{bookForm.cover}}" mode="aspectFill" />
+        <view wx:else class="cover-placeholder">
+          <text class="cover-plus">+</text>
+          <text class="cover-hint">上传封面</text>
+        </view>
+        <text class="picker-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="section-title">出版信息</view>
+
+    <view class="form-item">
+      <text class="form-label">出版社</text>
+      <input class="form-input" placeholder="请输入出版社" value="{{bookForm.publisher}}" data-field="publisher" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">出版时间</text>
+      <input class="form-input" placeholder="如：2024-01" value="{{bookForm.publishDate}}" data-field="publishDate" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">页数</text>
+      <input class="form-input" type="number" placeholder="请输入页数" value="{{bookForm.pages}}" data-field="pages" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">定价</text>
+      <input class="form-input" type="digit" placeholder="如：58.00" value="{{bookForm.price}}" data-field="price" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">分类法</text>
+      <input class="form-input" placeholder="如：I253.7（中图法编号）" value="{{bookForm.indexNo}}" data-field="indexNo" bindinput="onInput" />
+    </view>
+
+    <!-- 纸质书专属：馆藏位置 -->
+    <view class="form-item" wx:if="{{bookType === 'physical'}}">
+      <text class="form-label">馆藏位置</text>
+      <input class="form-input" placeholder="如：A区-文学-001" value="{{bookForm.location}}" data-field="location" bindinput="onInput" />
+    </view>
+
+    <view class="form-item form-item-textarea">
+      <text class="form-label">简介</text>
+      <textarea class="form-textarea" placeholder="请输入图书简介" value="{{bookForm.description}}" data-field="description" bindinput="onInput" maxlength="500" auto-height />
+    </view>
+  </view>
+
+  <view class="btn btn-primary btn-lg btn-block {{saving ? 'loading' : ''}}" bindtap="onSave">
+    <text>{{saving ? '保存中...' : '确定'}}</text>
+  </view>
+</view>

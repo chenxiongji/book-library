@@ -1,0 +1,13 @@
+@import "../../styles/admin-common.wxss";
+
+/* 列表内的删除入口（catchtap 阻止冒泡，避免同时触发编辑） */
+.cell-del {
+  flex-shrink: 0;
+  padding: 8rpx 20rpx;
+  margin-right: 12rpx;
+  font-size: 24rpx;
+  color: #E02020;
+  border: 1rpx solid #F5C6C6;
+  border-radius: 8rpx;
+  background: #FFF5F5;
+}

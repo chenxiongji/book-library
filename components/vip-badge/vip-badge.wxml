@@ -1,0 +1,5 @@
+<!-- components/vip-badge/vip-badge.wxml -->
+<view class="vip-badge vip-badge--{{size}}" wx:if="{{levelInfo}}" style="background: {{levelInfo.color}}20; color: {{levelInfo.color}}; border-color: {{levelInfo.color}}40;">
+  <text class="vip-icon">{{levelInfo.icon}}</text>
+  <text class="vip-name">{{levelInfo.name}}</text>
+</view>

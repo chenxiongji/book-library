@@ -1,0 +1,44 @@
+<!-- pages/favorites/favorites.wxml - 我的收藏 -->
+<view class="page">
+
+  <!-- Tab 切换 -->
+  <view class="tabs">
+    <view class="tab {{tab === 'book' ? 'active' : ''}}" data-tab="book" bindtap="onTabTap">
+      <text>图书</text>
+      <text class="tab-count" wx:if="{{counts.book}}">{{counts.book}}</text>
+    </view>
+    <view class="tab {{tab === 'note' ? 'active' : ''}}" data-tab="note" bindtap="onTabTap">
+      <text>笔记</text>
+      <text class="tab-count" wx:if="{{counts.note}}">{{counts.note}}</text>
+    </view>
+  </view>
+
+  <!-- 收藏列表 -->
+  <view class="fav-list" wx:if="{{list.length > 0}}">
+    <view class="fav-item" wx:for="{{list}}" wx:key="id">
+      <view class="fav-main" data-id="{{item.targetId}}" data-type="{{item.type}}" bindtap="onItemTap">
+        <image wx:if="{{item.cover}}" class="fav-cover" src="{{item.cover}}" mode="aspectFill" />
+        <view wx:else class="fav-cover fav-cover-empty">
+          <text>{{item.type === 'book' ? '📖' : '📝'}}</text>
+        </view>
+        <view class="fav-info">
+          <text class="fav-title text-ellipsis">{{item.title}}</text>
+          <text class="fav-sub text-ellipsis" wx:if="{{item.author}}">{{item.author}}</text>
+          <text class="fav-extra text-ellipsis" wx:if="{{item.extra}}">{{item.extra}}</text>
+          <text class="fav-time">{{timeAgoMap[item.id]}}</text>
+        </view>
+      </view>
+      <view class="fav-remove" data-id="{{item.targetId}}" data-type="{{item.type}}" data-title="{{item.title}}" catchtap="onUnfavorite">
+        <text>✕</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空态 -->
+  <view class="empty" wx:else>
+    <text class="empty-icon">{{tab === 'book' ? '📚' : '📝'}}</text>
+    <text class="empty-text">{{tab === 'book' ? '还没有收藏的图书' : '还没有收藏的笔记'}}</text>
+    <text class="empty-sub">在图书详情页或笔记页点击收藏按钮即可添加</text>
+  </view>
+
+</view>

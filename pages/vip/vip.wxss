@@ -1,0 +1,384 @@
+/* pages/vip/vip.wxss */
+.page {
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* VIP头部 */
+.vip-header {
+  padding: 0 24rpx 32rpx;
+  border-radius: 0 0 32rpx 32rpx;
+}
+
+.vip-header-content {
+  padding-top: 40rpx;
+}
+
+.vip-user-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 32rpx;
+}
+
+.vip-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 40rpx;
+  font-weight: 600;
+  border: 3rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.vip-user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.vip-user-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.vip-level-badge {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  align-self: flex-start;
+}
+
+.vip-level-icon {
+  font-size: 22rpx;
+}
+
+.vip-level-name {
+  font-size: 22rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.vip-points-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.vip-points-num {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.vip-points-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 等级进度 */
+.level-progress-section {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+}
+
+.level-progress-bar {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+
+.level-progress-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  transition: width 0.5s;
+}
+
+.level-progress-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.level-current {
+  font-size: 22rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.level-next {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.level-max {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 快捷统计 */
+.quick-stats {
+  display: flex;
+  margin: 24rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 28rpx 0;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.quick-stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.quick-stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.quick-stat-label {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+/* 通用Section */
+.section {
+  margin: 24rpx;
+  padding: 24rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+/* 权益列表 */
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.benefit-check {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  font-size: 22rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.benefit-text {
+  font-size: 28rpx;
+  color: #4B5563;
+}
+
+/* 充值CTA */
+.recharge-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24rpx;
+  padding: 28rpx 24rpx;
+  background: linear-gradient(135deg, #FF9F43, #EE5A24);
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(238, 90, 36, 0.3);
+}
+
+.recharge-cta-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.recharge-cta-icon {
+  font-size: 48rpx;
+}
+
+.recharge-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.recharge-cta-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.recharge-cta-desc {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.recharge-cta-arrow {
+  font-size: 26rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* 等级列表 */
+.levels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.level-card {
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 2rpx solid #F3F4F6;
+  opacity: 0.6;
+}
+
+.level-card.current {
+  border-color: #4A6CF7;
+  opacity: 1;
+  box-shadow: 0 4rpx 12rpx rgba(74, 108, 247, 0.15);
+}
+
+.level-card.passed {
+  opacity: 0.5;
+}
+
+.level-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 24rpx;
+}
+
+.level-card-icon {
+  font-size: 40rpx;
+}
+
+.level-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.level-card-name {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.level-card-points {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+.level-card-status {
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  background: #4A6CF7;
+  color: #FFFFFF;
+}
+
+.level-card-status.passed {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.level-card-benefits {
+  padding: 0 24rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.level-benefit-text {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+/* 充值记录 */
+.recharge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.recharge-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+
+.recharge-item:last-child {
+  border-bottom: none;
+}
+
+.recharge-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.recharge-item-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1F2937;
+}
+
+.recharge-item-date {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+.recharge-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4rpx;
+}
+
+.recharge-item-points {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #F59E0B;
+}
+
+.recharge-item-amount {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}

@@ -1,0 +1,116 @@
+<!-- pages/scan/scan.wxml -->
+<view class="page">
+
+  <!-- 扫码引导 -->
+  <view class="scan-guide" wx:if="{{step === 'scan'}}">
+    <view class="scan-icon-wrap">
+      <view class="scan-frame">
+        <view class="scan-line"></view>
+      </view>
+      <text class="scan-emoji">📷</text>
+    </view>
+    <text class="scan-title">扫描图书条形码</text>
+    <text class="scan-desc">将图书背面的ISBN条形码对准扫描框</text>
+    <view class="scan-btn btn btn-primary btn-lg" bindtap="startScan">
+      <text>开始扫码</text>
+    </view>
+    <view class="manual-link" bindtap="onManualInput">
+      <text>手动输入图书信息 ›</text>
+    </view>
+  </view>
+
+  <!-- 录入表单 -->
+  <view class="form-section" wx:if="{{step === 'form'}}">
+    <view class="form-header">
+      <view class="isbn-badge" wx:if="{{scanResult}}">
+        <text class="isbn-label">ISBN</text>
+        <text class="isbn-value">{{scanResult}}</text>
+      </view>
+      <view class="rescan-btn" bindtap="onReScan">
+        <text>重新扫码</text>
+      </view>
+    </view>
+
+    <!-- 数据来源提示 -->
+    <view class="source-tip" wx:if="{{dataSource}}">
+      <text>📚 资料来源：{{dataSource}}，已自动填充</text>
+    </view>
+
+    <!-- 封面预览 -->
+    <view class="cover-preview" wx:if="{{bookForm.cover}}">
+      <image class="cover-img" src="{{bookForm.cover}}" mode="aspectFill" />
+      <text class="cover-tip">已自动获取封面</text>
+    </view>
+
+    <!-- 表单字段 -->
+    <view class="form-card">
+      <view class="form-item">
+        <text class="form-label">书名 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入书名" value="{{bookForm.title}}" data-field="title" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">作者 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入作者" value="{{bookForm.author}}" data-field="author" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">ISBN</text>
+        <input class="form-input" placeholder="请输入ISBN" value="{{bookForm.isbn}}" data-field="isbn" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">分类</text>
+        <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
+          <view class="form-picker">
+            <text>{{bookForm.category}}</text>
+            <text class="picker-arrow">›</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">出版社</text>
+        <input class="form-input" placeholder="请输入出版社" value="{{bookForm.publisher}}" data-field="publisher" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">出版日期</text>
+        <input class="form-input" placeholder="如：2024-01" value="{{bookForm.publishDate}}" data-field="publishDate" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">页数</text>
+        <input class="form-input" type="number" placeholder="请输入页数" value="{{bookForm.pages}}" data-field="pages" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">馆藏位置</text>
+        <input class="form-input" placeholder="如：A区-科幻-001" value="{{bookForm.location}}" data-field="location" bindinput="onInput" />
+      </view>
+
+      <view class="form-item form-item-textarea">
+        <text class="form-label">简介</text>
+        <textarea class="form-textarea" placeholder="请输入图书简介" value="{{bookForm.description}}" data-field="description" bindinput="onInput" maxlength="500" />
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="form-actions">
+      <view class="btn btn-outline btn-lg flex-1" bindtap="onSaveAndContinue">
+        <text>保存并继续</text>
+      </view>
+      <view class="btn btn-primary btn-lg flex-1 {{saving ? 'loading' : ''}}" bindtap="onSave">
+        <text>{{saving ? '保存中...' : '保存'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 成功页面 -->
+  <view class="success-section" wx:if="{{step === 'success'}}">
+    <view class="success-icon">✅</view>
+    <text class="success-title">图书录入成功！</text>
+    <text class="success-desc">《{{bookForm.title}}》已添加到书库</text>
+  </view>
+
+</view>

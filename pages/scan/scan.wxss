@@ -1,0 +1,280 @@
+/* pages/scan/scan.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx;
+}
+
+/* 扫码引导 */
+.scan-guide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120rpx;
+}
+
+.scan-icon-wrap {
+  position: relative;
+  width: 360rpx;
+  height: 360rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48rpx;
+}
+
+.scan-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 6rpx solid #4A6CF7;
+  border-radius: 32rpx;
+  overflow: hidden;
+}
+
+.scan-frame::before,
+.scan-frame::after {
+  content: '';
+  position: absolute;
+  width: 48rpx;
+  height: 48rpx;
+  border: 8rpx solid #4A6CF7;
+}
+
+.scan-frame::before {
+  top: -6rpx;
+  left: -6rpx;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 32rpx 0 0 0;
+}
+
+.scan-frame::after {
+  bottom: -6rpx;
+  right: -6rpx;
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 32rpx 0;
+}
+
+.scan-line {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 4rpx;
+  background: linear-gradient(90deg, transparent, #4A6CF7, transparent);
+  top: 50%;
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0%, 100% { top: 20%; }
+  50% { top: 80%; }
+}
+
+.scan-emoji {
+  font-size: 96rpx;
+}
+
+.scan-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.scan-desc {
+  font-size: 26rpx;
+  color: #9CA3AF;
+  margin-bottom: 64rpx;
+}
+
+.scan-btn {
+  width: 80%;
+  margin-bottom: 32rpx;
+}
+
+.manual-link {
+  padding: 16rpx 32rpx;
+}
+
+.manual-link text {
+  font-size: 26rpx;
+  color: #4A6CF7;
+}
+
+/* 表单 */
+.form-section {
+  padding-bottom: 40rpx;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.isbn-badge {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: rgba(74, 108, 247, 0.1);
+  padding: 8rpx 20rpx;
+  border-radius: 12rpx;
+}
+
+.isbn-label {
+  font-size: 22rpx;
+  color: #4A6CF7;
+  font-weight: 600;
+}
+
+.isbn-value {
+  font-size: 24rpx;
+  color: #4A6CF7;
+}
+
+.rescan-btn {
+  padding: 8rpx 20rpx;
+  background: #F5F6FA;
+  border-radius: 12rpx;
+}
+
+.rescan-btn text {
+  font-size: 24rpx;
+  color: #6B7280;
+}
+
+/* 封面预览 */
+.cover-preview {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+  padding: 20rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+}
+
+.cover-img {
+  width: 100rpx;
+  height: 140rpx;
+  border-radius: 8rpx;
+  background: #F3F4F6;
+}
+
+.cover-tip {
+  font-size: 24rpx;
+  color: #10B981;
+}
+
+/* 表单卡片 */
+.form-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 8rpx 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-item-textarea {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.form-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #4B5563;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.required {
+  color: #EF4444;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2937;
+}
+
+.form-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #1F2937;
+}
+
+.picker-arrow {
+  color: #D1D5DB;
+  font-size: 32rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  color: #1F2937;
+  line-height: 1.6;
+}
+
+/* 操作按钮 */
+.form-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 0 8rpx;
+}
+
+/* 成功 */
+.success-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.success-icon {
+  font-size: 120rpx;
+  margin-bottom: 32rpx;
+}
+
+.success-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.success-desc {
+  font-size: 26rpx;
+  color: #9CA3AF;
+}
+
+.btn.loading {
+  opacity: 0.6;
+}
+
+/* 数据来源提示 */
+.source-tip {
+  margin: 16rpx 24rpx 0;
+  background: rgba(82, 196, 26, 0.1);
+  border-radius: 12rpx;
+  padding: 12rpx 20rpx;
+  font-size: 24rpx;
+  color: #52a326;
+}

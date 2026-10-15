@@ -1,0 +1,48 @@
+<!-- pages/admin-contact/admin-contact.wxml -->
+<view class="page">
+
+  <view class="card">
+    <view class="card-title">联系方式</view>
+    <view class="card-tip">这些信息会展示在"我的"页面客服入口中，方便读者咨询。</view>
+
+    <view class="form-item">
+      <view class="form-label">客服电话<text class="req">*</text></view>
+      <input class="form-input" type="text" placeholder="如：400-800-8888" value="{{contact.phone}}" data-field="phone" bindinput="bindField" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">客服微信</view>
+      <input class="form-input" placeholder="微信号" value="{{contact.wechat}}" data-field="wechat" bindinput="bindField" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">邮箱</view>
+      <input class="form-input" placeholder="service@example.com" value="{{contact.email}}" data-field="email" bindinput="bindField" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">地址</view>
+      <input class="form-input" placeholder="书房详细地址" value="{{contact.address}}" data-field="address" bindinput="bindField" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">服务时间</view>
+      <input class="form-input" placeholder="如：周一至周日 09:00 - 21:00" value="{{contact.hours}}" data-field="hours" bindinput="bindField" />
+    </view>
+  </view>
+
+  <view class="btn" bindtap="onSave">保存</view>
+
+  <view class="card" wx:if="{{contact.phone}}">
+    <view class="card-title">快捷操作</view>
+    <view class="cell" data-field="phone" bindtap="onCopy">
+      <view class="cell-main"><view class="cell-title">复制客服电话</view></view>
+      <text class="cell-arrow">⧉</text>
+    </view>
+    <view class="cell" wx:if="{{contact.wechat}}" data-field="wechat" bindtap="onCopy">
+      <view class="cell-main"><view class="cell-title">复制客服微信</view></view>
+      <text class="cell-arrow">⧉</text>
+    </view>
+  </view>
+
+</view>

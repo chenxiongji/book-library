@@ -1,0 +1,160 @@
+<!-- pages/book-detail/book-detail.wxml -->
+<view class="page" wx:if="{{book}}">
+
+  <!-- 图书头部 -->
+  <view class="book-header">
+    <view class="header-bg" style="background: linear-gradient(135deg, #4A6CF7, #6B8AFF);"></view>
+    <view class="book-header-content">
+      <image class="book-cover-lg" src="{{book.cover || '/images/book-default.png'}}" mode="aspectFill" />
+      <view class="book-header-info">
+        <text class="book-title-lg">{{book.title}}</text>
+        <text class="book-author-lg">{{book.author}}</text>
+        <view class="book-tags">
+          <text class="tag tag-primary" wx:if="{{book.category}}">{{book.category}}</text>
+          <text class="tag {{book.type === 'electronic' ? 'tag-warning' : 'tag-success'}}">{{book.type === 'electronic' ? '电子书' : '纸质书'}}</text>
+          <text class="tag {{book.status === 'available' ? 'tag-success' : 'tag-danger'}}" wx:if="{{book.type === 'physical'}}">{{book.status === 'available' ? '可借阅' : '已借出'}}</text>
+          <text class="tag tag-primary" wx:if="{{book.fileFormat}}">{{book.fileFormat}}</text>
+        </view>
+        <view class="book-meta-row" wx:if="{{book.publisher}}">
+          <text class="meta-label">出版社</text>
+          <text class="meta-value">{{book.publisher}}</text>
+        </view>
+        <view class="book-meta-row" wx:if="{{book.publishDate}}">
+          <text class="meta-label">出版日期</text>
+          <text class="meta-value">{{book.publishDate}}</text>
+        </view>
+        <view class="book-meta-row" wx:if="{{book.pages}}">
+          <text class="meta-label">页数</text>
+          <text class="meta-value">{{book.pages}}页</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 借阅状态卡片 -->
+  <view class="status-card" wx:if="{{borrowRecord}}">
+    <view class="status-card-header">
+      <text class="status-card-title">📋 借阅信息</text>
+      <text class="status-badge {{borrowRecord.overdue ? 'overdue' : ''}}">{{borrowRecord.daysLeftText}}</text>
+    </view>
+    <view class="status-info-row">
+      <text class="status-info-label">借阅日期</text>
+      <text class="status-info-value">{{borrowRecord.borrowDateFormatted}}</text>
+    </view>
+    <view class="status-info-row">
+      <text class="status-info-label">应还日期</text>
+      <text class="status-info-value {{borrowRecord.overdue ? 'text-danger' : ''}}">{{borrowRecord.dueDateFormatted}}</text>
+    </view>
+    <view class="btn btn-warning btn-block mt-16" bindtap="onReturn">
+      <text>归还图书</text>
+    </view>
+  </view>
+
+  <!-- 阅读进度卡片 -->
+  <view class="progress-card" wx:if="{{readingProgress && book.type === 'electronic'}}">
+    <view class="progress-card-header">
+      <text class="progress-card-title">📖 阅读进度</text>
+      <text class="progress-percent-lg">{{readingProgress.percent}}%</text>
+    </view>
+    <view class="progress-bar-large">
+      <view class="progress-bar-fill" style="width: {{readingProgress.percent}}%; background: linear-gradient(90deg, #4A6CF7, #6B8AFF);"></view>
+    </view>
+    <text class="progress-chapter">{{readingProgress.chapter || ''}}</text>
+    <view class="btn btn-primary btn-block mt-16" bindtap="onContinueRead">
+      <text>继续阅读</text>
+    </view>
+  </view>
+
+  <!-- 简介 -->
+  <view class="section-card" wx:if="{{book.description}}">
+    <text class="section-card-title">内容简介</text>
+    <text class="book-description">{{book.description}}</text>
+  </view>
+
+  <!-- 图书详情 -->
+  <view class="section-card">
+    <text class="section-card-title">图书信息</text>
+    <view class="info-row" wx:if="{{book.isbn}}">
+      <text class="info-label">ISBN</text>
+      <text class="info-value">{{book.isbn}}</text>
+    </view>
+    <view class="info-row" wx:if="{{book.location}}">
+      <text class="info-label">馆藏位置</text>
+      <text class="info-value">📍 {{book.location}}</text>
+    </view>
+    <view class="info-row" wx:if="{{book.fileSize}}">
+      <text class="info-label">文件大小</text>
+      <text class="info-value">{{book.fileSize}}</text>
+    </view>
+    <view class="info-row" wx:if="{{book.fileFormat}}">
+      <text class="info-label">文件格式</text>
+      <text class="info-value">{{book.fileFormat}}</text>
+    </view>
+  </view>
+
+  <!-- 笔记列表 -->
+  <view class="section-card">
+    <view class="section-card-header">
+      <text class="section-card-title">阅读笔记</text>
+      <text class="section-card-more" bindtap="onWriteNote">写笔记 ✏️</text>
+    </view>
+    <view class="note-list" wx:if="{{notes.length > 0}}">
+      <view class="note-item" wx:for="{{notes}}" wx:key="id" data-id="{{item.id}}" bindtap="onNoteTap">
+        <text class="note-item-title text-ellipsis">{{item.title}}</text>
+        <text class="note-item-content text-ellipsis-2">{{item.content}}</text>
+        <view class="note-item-footer">
+          <text class="note-item-author">{{item.userName}}</text>
+          <text class="note-item-likes">❤️ {{item.likes}}</text>
+        </view>
+      </view>
+    </view>
+    <empty-state wx:else icon="📝" text="暂无笔记" subText="成为第一个写笔记的人" actionText="写笔记" bind:action="onWriteNote" />
+  </view>
+
+  <!-- 相关图书 -->
+  <view class="section-card" wx:if="{{relatedBooks.length > 0}}">
+    <text class="section-card-title">相关推荐</text>
+    <view class="related-grid">
+      <view class="related-item" wx:for="{{relatedBooks}}" wx:key="id">
+        <book-card book="{{item}}" mode="grid" bind:booktap="onBookTap" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom">
+    <view class="btn btn-ghost btn-edit {{favorited ? 'btn-fav-active' : ''}}" bindtap="onToggleFavorite">
+      <text>{{favorited ? '⭐' : '☆'}}</text>
+    </view>
+    <block wx:if="{{book.type === 'electronic'}}">
+      <view class="btn btn-ghost flex-1" bindtap="onWriteNote">
+        <text>📝 写笔记</text>
+      </view>
+      <view class="btn btn-ghost btn-edit" bindtap="onEditBook">
+        <text>✏️</text>
+      </view>
+      <view class="btn btn-primary flex-1" bindtap="onRead">
+        <text>📖 {{readingProgress ? '继续阅读' : '开始阅读'}}</text>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="btn btn-ghost flex-1" bindtap="onWriteNote">
+        <text>📝 写笔记</text>
+      </view>
+      <view class="btn btn-ghost btn-edit" bindtap="onEditBook">
+        <text>✏️</text>
+      </view>
+      <block wx:if="{{borrowRecord}}">
+        <view class="btn btn-warning flex-1" bindtap="onReturn">
+          <text>📤 归还</text>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="btn {{book.status === 'available' ? 'btn-primary' : 'btn-ghost'}} flex-1" bindtap="onBorrow">
+          <text>{{book.status === 'available' ? '📚 借阅' : '已借出'}}</text>
+        </view>
+      </block>
+    </block>
+  </view>
+
+</view>

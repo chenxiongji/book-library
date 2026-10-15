@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "book-card": "/components/book-card/book-card",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "图书详情",
+  "enableShareAppMessage": true
+}

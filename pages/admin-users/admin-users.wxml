@@ -1,0 +1,46 @@
+<!-- pages/admin-users/admin-users.wxml -->
+<view class="page">
+
+  <view class="stat-bar">
+    <view class="stat-item">
+      <view class="stat-num">{{users.length}}</view>
+      <view class="stat-label">注册用户</view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-num">{{users.length - bannedCount}}</view>
+      <view class="stat-label">正常</view>
+    </view>
+    <view class="stat-item">
+      <view class="stat-num">{{bannedCount}}</view>
+      <view class="stat-label">已禁用</view>
+    </view>
+  </view>
+
+  <view class="search-box">
+    <text class="search-icon">🔍</text>
+    <input class="search-input" placeholder="搜索昵称 / 手机号" value="{{keyword}}" bindinput="onSearch" />
+  </view>
+
+  <view class="card" wx:if="{{shown.length}}">
+    <view class="cell" wx:for="{{shown}}" wx:key="id" data-id="{{item.id}}" bindtap="onUserTap">
+      <view class="avatar">{{item.avatar}}</view>
+      <view class="cell-main">
+        <view class="cell-title">
+          <text>{{item.name}}</text>
+          <text class="badge" wx:if="{{item.isSelf}}">我</text>
+          <text class="badge badge-gray" wx:if="{{item.status === 'banned'}}">{{item.statusName}}</text>
+        </view>
+        <view class="cell-sub">{{item.phone || '未绑定手机'}} · {{item.vipName}} · {{item.vipPoints}}积分 · 借过{{item.totalBorrowed}}本</view>
+      </view>
+      <text class="cell-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon">👥</view>
+    <view>没有找到匹配的用户</view>
+  </view>
+
+  <view class="btn" bindtap="onAdd">＋ 新增用户</view>
+
+</view>

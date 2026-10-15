@@ -1,0 +1,38 @@
+<!-- pages/admin/admin.wxml -->
+<view class="page">
+
+  <view class="board">
+    <block wx:for="{{groups}}" wx:key="title" wx:for-item="group" wx:for-index="gIndex">
+      <!-- 组标题 -->
+      <view class="group-title-wrap" wx:if="{{group.title}}">
+        <text class="group-title">{{group.title}}</text>
+      </view>
+      <!-- 3列宫格 -->
+      <view class="grid">
+        <view class="grid-item"
+          wx:for="{{group.items}}"
+          wx:key="id"
+          wx:for-item="item"
+          data-id="{{item.id}}"
+          bindtap="onItemTap">
+          <view class="icon-wrap">
+            <text class="item-icon">{{item.icon}}</text>
+            <view class="red-dot" wx:if="{{item.dotKey && dots[item.dotKey]}}"></view>
+          </view>
+          <text class="item-name">{{item.name}}</text>
+        </view>
+        <!-- 补位占位，保证最后一行左对齐美观 -->
+        <view class="grid-item placeholder" wx:for="{{(3 - (group.items.length % 3)) % 3}}" wx:key="*this"></view>
+      </view>
+      <!-- 组分隔线 -->
+      <view class="group-divider" wx:if="{{gIndex < groups.length - 1}}"></view>
+    </block>
+  </view>
+
+  <!-- 底部客服 -->
+  <view class="footer">
+    <text class="footer-text">使用咨询或产品建议可以反馈给客服，</text>
+    <text class="footer-link" bindtap="onContact">联系客服</text>
+  </view>
+
+</view>

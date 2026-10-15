@@ -1,0 +1,101 @@
+/* pages/profile-edit/profile-edit.wxss */
+.page {
+  min-height: 100vh;
+  padding: 40rpx 24rpx;
+  box-sizing: border-box;
+}
+
+/* 头像区 */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0 48rpx;
+}
+.avatar-wrap {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 16rpx;
+}
+.avatar-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+}
+.avatar-placeholder {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4A6CF7, #6B8AFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 64rpx;
+  font-weight: 600;
+}
+.avatar-camera {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: #FFF;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+}
+.avatar-tip {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+/* 表单 */
+.form-card {
+  background: #FFF;
+  border-radius: 16rpx;
+  padding: 0 28rpx;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  min-height: 100rpx;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+.form-item:last-child { border-bottom: none; }
+.form-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #374151;
+  flex-shrink: 0;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2937;
+}
+
+.form-tip {
+  padding: 20rpx 32rpx 0;
+  font-size: 24rpx;
+  color: #C0C6D0;
+}
+
+/* 保存按钮 */
+.btn-save {
+  margin: 56rpx 48rpx 0;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4A6CF7;
+  color: #FFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+}
+.btn-save.disabled { opacity: 0.6; }

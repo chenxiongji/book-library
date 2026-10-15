@@ -1,0 +1,124 @@
+<!-- pages/upload/upload.wxml -->
+<view class="page">
+
+  <!-- 选择文件 -->
+  <view class="upload-guide" wx:if="{{step === 'select'}}">
+    <view class="upload-icon-wrap" bindtap="onChooseFile">
+      <text class="upload-emoji">📤</text>
+      <text class="upload-title">点击上传电子书</text>
+      <text class="upload-desc">支持从聊天记录中选择文件</text>
+    </view>
+
+    <view class="format-section">
+      <text class="format-title">支持的格式</text>
+      <view class="format-list">
+        <view class="format-tag" wx:for="{{supportedFormats}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="tips-section">
+      <text class="tips-title">上传须知</text>
+      <view class="tip-item">
+        <text class="tip-dot">•</text>
+        <text class="tip-text">文件大小建议不超过 50MB</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-dot">•</text>
+        <text class="tip-text">支持从微信聊天记录中选择文件</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-dot">•</text>
+        <text class="tip-text">上传后可在书库中直接阅读</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-dot">•</text>
+        <text class="tip-text">请确保上传内容不侵犯版权</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 上传中 -->
+  <view class="uploading-section" wx:if="{{step === 'uploading'}}">
+    <view class="uploading-icon">📁</view>
+    <text class="uploading-name text-ellipsis">{{fileInfo.name}}</text>
+    <view class="progress-ring">
+      <text class="progress-text">{{uploadProgress}}%</text>
+    </view>
+    <text class="uploading-tip">正在上传，请稍候...</text>
+  </view>
+
+  <!-- 填写信息 -->
+  <view class="form-section" wx:if="{{step === 'form'}}">
+    <!-- 文件信息卡片 -->
+    <view class="file-info-card">
+      <view class="file-icon" style="background: rgba(74, 108, 247, 0.1);">
+        <text class="file-emoji">{{fileInfo.formatIcon}}</text>
+      </view>
+      <view class="file-info-detail">
+        <text class="file-name text-ellipsis">{{fileInfo.name}}</text>
+        <view class="file-meta">
+          <text class="file-format tag tag-primary">{{fileInfo.format}}</text>
+          <text class="file-size">{{fileInfo.size}}</text>
+        </view>
+      </view>
+      <view class="re-upload" bindtap="onReUpload">
+        <text>更换</text>
+      </view>
+    </view>
+
+    <!-- 封面选择 -->
+    <view class="cover-section">
+      <view class="cover-upload" bindtap="onChooseCover">
+        <block wx:if="{{bookForm.cover}}">
+          <image class="cover-preview-img" src="{{bookForm.cover}}" mode="aspectFill" />
+        </block>
+        <block wx:else>
+          <text class="cover-placeholder-icon">📖</text>
+          <text class="cover-placeholder-text">添加封面</text>
+        </block>
+      </view>
+    </view>
+
+    <!-- 表单 -->
+    <view class="form-card">
+      <view class="form-item">
+        <text class="form-label">书名 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入书名" value="{{bookForm.title}}" data-field="title" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">作者 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入作者" value="{{bookForm.author}}" data-field="author" bindinput="onInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">分类</text>
+        <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
+          <view class="form-picker">
+            <text>{{bookForm.category}}</text>
+            <text class="picker-arrow">›</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item form-item-textarea">
+        <text class="form-label">简介</text>
+        <textarea class="form-textarea" placeholder="请输入图书简介（选填）" value="{{bookForm.description}}" data-field="description" bindinput="onInput" maxlength="500" />
+      </view>
+    </view>
+
+    <view class="btn btn-primary btn-lg btn-block {{saving ? 'loading' : ''}}" bindtap="onSave">
+      <text>{{saving ? '保存中...' : '保存到书库'}}</text>
+    </view>
+  </view>
+
+  <!-- 成功 -->
+  <view class="success-section" wx:if="{{step === 'success'}}">
+    <view class="success-icon">✅</view>
+    <text class="success-title">电子书上传成功！</text>
+    <text class="success-desc">《{{bookForm.title}}》已添加到书库</text>
+  </view>
+
+</view>

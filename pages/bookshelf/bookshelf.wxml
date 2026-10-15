@@ -1,0 +1,112 @@
+<!-- pages/bookshelf/bookshelf.wxml -->
+<view class="page">
+
+  <!-- 顶部：阅读时长 + 标签切换 -->
+  <view class="top-bar">
+    <view class="duration-card">
+      <text class="duration-num">{{totalMinutes}}</text>
+      <text class="duration-label">累计阅读(分钟)</text>
+    </view>
+    <view class="tabs">
+      <view class="tab {{tab === 'shelf' ? 'active' : ''}}" data-tab="shelf" bindtap="switchTab">
+        <text>书架 {{shelfBooks.length}}</text>
+      </view>
+      <view class="tab {{tab === 'history' ? 'active' : ''}}" data-tab="history" bindtap="switchTab">
+        <text>最近阅读 {{historyBooks.length}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 书架列表 -->
+  <block wx:if="{{tab === 'shelf'}}">
+    <view wx:if="{{shelfBooks.length === 0}}">
+      <empty-state icon="📚" text="书架还是空的" subText="上传一本电子书开始阅读吧" />
+      <view class="upload-btn-wrap">
+        <button class="upload-btn" bindtap="goUpload">＋ 上传电子书</button>
+      </view>
+    </view>
+
+    <view wx:else class="book-list">
+      <view class="book-item"
+        wx:for="{{shelfBooks}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        data-title="{{item.title}}"
+        data-started="{{item.started}}"
+        bindtap="onBookTap"
+        bindlongpress="onBookLongPress">
+
+        <view class="cover-wrap">
+          <image class="cover" src="{{item.cover || '/images/book-default.png'}}" mode="aspectFill" />
+          <view class="progress-bar" wx:if="{{item.started}}">
+            <view class="progress-fill" style="width: {{item.percent}}%;"></view>
+          </view>
+        </view>
+
+        <view class="book-info">
+          <text class="book-title">{{item.title}}</text>
+          <text class="book-author">{{item.author || '佚名'}}</text>
+          <text class="book-chapter" wx:if="{{item.chapter}}">{{item.chapter}}</text>
+          <view class="book-meta">
+            <text class="book-progress {{item.started ? 'reading' : ''}}">{{item.progressText}}</text>
+            <text class="book-time" wx:if="{{item.lastText}}">{{item.lastText}}</text>
+          </view>
+        </view>
+
+        <view class="item-actions">
+          <view class="action-btn primary" wx:if="{{item.started}}" data-id="{{item.id}}" data-started="{{item.started}}" catchtap="onBookTap">
+            <text>继续阅读</text>
+          </view>
+          <view class="action-btn" data-id="{{item.id}}" catchtap="onDetailTap">
+            <text>详情</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="upload-btn-wrap">
+        <button class="upload-btn ghost" bindtap="goUpload">＋ 上传更多电子书</button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 最近阅读列表 -->
+  <block wx:else>
+    <view wx:if="{{historyBooks.length === 0}}">
+      <empty-state icon="⏱️" text="还没有阅读记录" subText="打开一本电子书，记录会出现在这里" />
+    </view>
+
+    <view wx:else class="book-list">
+      <view class="book-item"
+        wx:for="{{historyBooks}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        data-title="{{item.title}}"
+        data-started="{{item.started}}"
+        bindtap="onBookTap">
+
+        <view class="cover-wrap">
+          <image class="cover" src="{{item.cover || '/images/book-default.png'}}" mode="aspectFill" />
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.percent}}%;"></view>
+          </view>
+        </view>
+
+        <view class="book-info">
+          <text class="book-title">{{item.title}}</text>
+          <text class="book-chapter" wx:if="{{item.chapter}}">{{item.chapter}}</text>
+          <view class="book-meta">
+            <text class="book-progress reading">{{item.progressText}}</text>
+            <text class="book-time">{{item.lastText}}</text>
+          </view>
+        </view>
+
+        <view class="item-actions">
+          <view class="action-btn primary" data-id="{{item.id}}" data-started="{{item.started}}" catchtap="onBookTap">
+            <text>继续阅读</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+</view>

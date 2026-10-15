@@ -1,0 +1,61 @@
+<!-- pages/admin-fields/admin-fields.wxml -->
+<view class="page">
+
+  <view class="card">
+    <view class="card-title">登记字段</view>
+    <view class="card-tip">这些字段会出现在"录入图书"表单中，用于补充 ISBN 扫码获取不到的信息。</view>
+
+    <view class="cell" wx:for="{{fields}}" wx:key="id" data-id="{{item.id}}" bindtap="onEdit">
+      <view class="cell-main">
+        <view class="cell-title">
+          <text>{{item.name}}</text>
+          <text class="badge badge-purple">{{item.type}}</text>
+          <text class="badge {{item.required ? 'badge-red' : 'badge-gray'}}">{{item.required ? '必填' : '选填'}}</text>
+        </view>
+      </view>
+      <view class="cell-del" catchtap="onDelete" data-id="{{item.id}}">删除</view>
+      <text class="cell-arrow">›</text>
+    </view>
+
+    <view class="empty" wx:if="{{!fields.length}}">
+      <view class="empty-icon">✏️</view>
+      <view>暂无自定义字段</view>
+    </view>
+  </view>
+
+  <!-- 编辑器 -->
+  <view class="card" wx:if="{{editor}}">
+    <view class="card-title">{{editor.isNew ? '新增字段' : '编辑字段'}}</view>
+
+    <view class="form-item">
+      <view class="form-label">字段名称<text class="req">*</text></view>
+      <input class="form-input" placeholder="如：丛书名" value="{{editor.name}}" bindinput="onEditorName" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">字段类型</view>
+      <picker mode="selector" range="{{typeNames}}" value="{{editor.typeIndex}}" bindchange="onEditorType">
+        <view class="form-picker">
+          <text>{{typeNames[editor.typeIndex]}}</text>
+          <text class="arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="switch-row">
+      <view class="cell-main">
+        <view class="cell-title">是否必填</view>
+        <view class="cell-sub">开启后录入图书时必须填写该字段</view>
+      </view>
+      <switch checked="{{editor.required}}" color="#4A6CF7" bindchange="onEditorRequired" />
+    </view>
+
+    <view class="btn-row">
+      <view class="btn ghost" bindtap="onCancel">取消</view>
+      <view class="btn" bindtap="onSave">保存</view>
+    </view>
+  </view>
+
+  <view class="btn" wx:if="{{!editor}}" bindtap="onAdd">＋ 新增字段</view>
+
+</view>

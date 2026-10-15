@@ -1,0 +1,212 @@
+/* pages/add-book/add-book.wxss - 录入图书（对照设计稿版式） */
+.page {
+  min-height: 100vh;
+  padding: 24rpx 0 60rpx;
+}
+
+/* 区块标题 */
+.section-title {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 32rpx 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F2937;
+}
+.collapse-arrow {
+  margin-left: 8rpx;
+  font-size: 26rpx;
+  color: #9CA3AF;
+  font-weight: 400;
+}
+
+/* 表单卡片 */
+.form-card {
+  background: #FFF;
+  margin: 0 24rpx;
+  border-radius: 16rpx;
+  padding: 0 28rpx;
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  min-height: 96rpx;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+.form-item:last-child { border-bottom: none; }
+.form-item-textarea {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12rpx;
+  padding: 20rpx 0;
+}
+.form-label {
+  width: 170rpx;
+  font-size: 28rpx;
+  color: #374151;
+  flex-shrink: 0;
+  font-weight: 400;
+}
+.required { color: #B4232A; margin-left: 2rpx; }
+.form-input { flex: 1; font-size: 28rpx; color: #1F2937; }
+.form-input.right { text-align: right; }
+.ph { color: #C0C6D0; font-size: 28rpx; }
+.form-textarea { width: 100%; min-height: 140rpx; font-size: 28rpx; color: #1F2937; line-height: 1.6; }
+
+/* 右对齐取值 + 箭头 */
+.form-value {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8rpx;
+  min-height: 48rpx;
+}
+.value-text { font-size: 28rpx; color: #1F2937; text-align: right; }
+.arrow, .arrow-next { color: #C0C6D0; font-size: 30rpx; }
+
+/* 字段下方红色提示 */
+.field-hint {
+  padding: 8rpx 0 20rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #B4232A;
+}
+
+/* 扫码按钮（ISBN / 编号） */
+.scan-btn {
+  margin-left: 16rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid #E5E7EB;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+}
+.scan-icon { font-size: 34rpx; color: #4B5563; line-height: 1; }
+
+/* 封面缩略图 */
+.cover-thumb {
+  width: 96rpx;
+  height: 128rpx;
+  border-radius: 8rpx;
+  background: #F5F6FA;
+}
+
+/* 上传文件按钮 */
+.upload-btn {
+  padding: 12rpx 32rpx;
+  font-size: 26rpx;
+  color: #374151;
+  background: #F5F6FA;
+  border-radius: 10rpx;
+  border: 1rpx solid #E5E7EB;
+}
+
+/* 已选电子书文件 */
+.file-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12rpx;
+  min-width: 0;
+}
+.file-name {
+  font-size: 26rpx;
+  color: #1F2937;
+  max-width: 320rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-size { font-size: 24rpx; color: #9CA3AF; flex-shrink: 0; }
+.file-remove {
+  font-size: 28rpx;
+  color: #B4232A;
+  padding: 4rpx 12rpx;
+  flex-shrink: 0;
+}
+
+/* 确定按钮 */
+.btn-submit {
+  margin: 40rpx 48rpx 0;
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #B4232A;
+  color: #FFF;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 46rpx;
+}
+.btn-submit.disabled { opacity: 0.6; }
+
+/* 录入后自动扫码 */
+.auto-scan-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 28rpx 0 10rpx;
+}
+.auto-scan-label { font-size: 26rpx; color: #6B7280; }
+
+/* ===== 标签多选弹层 ===== */
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 999;
+  display: flex;
+  align-items: flex-end;
+}
+.tag-panel {
+  width: 100%;
+  background: #FFF;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 36rpx 32rpx calc(36rpx + env(safe-area-inset-bottom));
+}
+.tag-panel-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F2937;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+.tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+  padding: 8rpx 0 40rpx;
+}
+.tag-chip {
+  padding: 12rpx 36rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #E5E7EB;
+  border-radius: 999rpx;
+  background: #FFF;
+  color: #374151;
+}
+.tag-chip.active { color: #FFF !important; }
+.tag-panel-confirm {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #B4232A;
+  color: #FFF;
+  font-size: 30rpx;
+  font-weight: 600;
+  border-radius: 44rpx;
+}
+
+/* 必填星号（扩展字段） */
+.req {
+  color: #E02020;
+  margin-left: 4rpx;
+}

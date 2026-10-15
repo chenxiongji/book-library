@@ -1,0 +1,283 @@
+/* pages/profile/profile.wxss */
+.page {
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.profile-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 300rpx;
+  background: linear-gradient(135deg, #4A6CF7, #6B8AFF);
+  border-radius: 0 0 40rpx 40rpx;
+}
+
+.header-content {
+  position: relative;
+  padding: 60rpx 24rpx 0;
+}
+
+.user-card {
+  display: flex;
+  gap: 20rpx;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.user-avatar-lg {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 48rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 4rpx solid rgba(255, 255, 255, 0.5);
+}
+.user-avatar-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.user-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  min-width: 0;
+}
+
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.user-name-lg {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.user-phone {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+.user-stats-row {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.user-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16rpx;
+}
+
+.user-stat-num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.user-stat-label {
+  font-size: 20rpx;
+  color: #9CA3AF;
+}
+
+.user-stat-divider {
+  width: 1rpx;
+  height: 40rpx;
+  background: #E5E7EB;
+}
+
+.edit-btn {
+  align-self: flex-start;
+  padding: 8rpx 20rpx;
+  background: #F5F6FA;
+  border-radius: 16rpx;
+}
+
+.edit-btn text {
+  font-size: 22rpx;
+  color: #6B7280;
+}
+
+/* VIP卡片 */
+.vip-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24rpx;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #2D2D2D, #1F2937);
+  border-radius: 20rpx;
+}
+
+.vip-card-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.vip-card-icon {
+  font-size: 48rpx;
+}
+
+.vip-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.vip-card-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.vip-card-desc {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.vip-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.vip-card-points {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.vip-card-points-label {
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 快捷统计 */
+.quick-stats {
+  display: flex;
+  margin: 0 24rpx 24rpx;
+  gap: 12rpx;
+}
+
+.quick-stat-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  padding: 20rpx 8rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.quick-stat-icon {
+  font-size: 36rpx;
+}
+
+.quick-stat-num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.quick-stat-label {
+  font-size: 20rpx;
+  color: #9CA3AF;
+}
+
+/* 菜单 */
+.menu-section {
+  margin: 0 24rpx 24rpx;
+}
+
+.menu-section-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #9CA3AF;
+  display: block;
+  margin-bottom: 12rpx;
+  padding-left: 8rpx;
+}
+
+.menu-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+
+.menu-item.last {
+  border-bottom: none;
+}
+
+.menu-item-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}
+
+.menu-item-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2937;
+  font-weight: 500;
+}
+
+.menu-item-arrow {
+  font-size: 32rpx;
+  color: #D1D5DB;
+}
+
+/* 底部 */
+.footer {
+  text-align: center;
+  padding: 48rpx 0 24rpx;
+}
+
+.footer-text {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.footer-sub {
+  font-size: 20rpx;
+  color: #D1D5DB;
+}

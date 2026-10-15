@@ -1,0 +1,46 @@
+<!-- components/book-card/book-card.wxml -->
+<view class="book-card {{mode === 'list' ? 'book-card--list' : 'book-card--grid'}} {{book.top ? 'book-card--top' : ''}}" bindtap="onTap" bindlongpress="onLongPress">
+
+  <!-- 置顶角标 -->
+  <view wx:if="{{book.top}}" class="top-badge">置顶</view>
+
+  <!-- 网格模式 -->
+  <block wx:if="{{mode === 'grid'}}">
+    <view class="book-cover-wrap">
+      <image class="book-cover" src="{{book.cover || '/images/book-default.png'}}" mode="aspectFill" lazy-load />
+      <view wx:if="{{showStatus && book.status === 'borrowed'}}" class="book-status borrowed">已借出</view>
+      <view wx:if="{{book.type === 'electronic'}}" class="book-type-badge">电子书</view>
+    </view>
+    <view class="book-info">
+      <text class="book-title text-ellipsis">{{book.title}}</text>
+      <text class="book-author text-ellipsis">{{book.author}}</text>
+      <view class="book-meta">
+        <text class="tag tag-primary" wx:if="{{book.category}}">{{book.category}}</text>
+        <text class="format-badge" wx:if="{{book.fileFormat}}">{{book.fileFormat}}</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 列表模式 -->
+  <block wx:else>
+    <image class="book-cover-list" src="{{book.cover || '/images/book-default.png'}}" mode="aspectFill" lazy-load />
+    <view class="book-info-list">
+      <text class="book-title text-ellipsis">{{book.title}}</text>
+      <text class="book-author text-ellipsis">{{book.author}}</text>
+      <view class="book-meta-list">
+        <text class="tag tag-primary" wx:if="{{book.category}}">{{book.category}}</text>
+        <text class="tag {{book.type === 'electronic' ? 'tag-warning' : 'tag-success'}}">
+          {{book.type === 'electronic' ? '电子书' : '纸质书'}}
+        </text>
+        <text class="format-badge" wx:if="{{book.fileFormat}}">{{book.fileFormat}}</text>
+      </view>
+      <view class="book-status-row" wx:if="{{showStatus}}">
+        <text class="status-text {{book.status === 'available' ? 'text-success' : 'text-danger'}}">
+          {{book.status === 'available' ? '可借阅' : '已借出'}}
+        </text>
+        <text class="location-text" wx:if="{{book.location}}">📍 {{book.location}}</text>
+      </view>
+    </view>
+  </block>
+
+</view>

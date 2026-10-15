@@ -1,0 +1,112 @@
+<!-- pages/recharge/recharge.wxml -->
+
+<!-- 选择套餐 -->
+<view class="page" wx:if="{{step === 'select'}}">
+
+  <!-- 积分余额 -->
+  <view class="balance-card">
+    <view class="balance-left">
+      <text class="balance-label">当前积分</text>
+      <text class="balance-num">{{userInfo.vipPoints}}</text>
+    </view>
+    <view class="balance-level">
+      <text class="balance-level-text">VIP {{userInfo.vipLevel}}级</text>
+    </view>
+  </view>
+
+  <!-- 套餐列表 -->
+  <view class="plans-section">
+    <text class="plans-title">选择充值套餐</text>
+    <view class="plans-grid">
+      <view class="plan-card {{selectedPlan.id === item.id ? 'selected' : ''}} {{item.popular ? 'popular' : ''}}" wx:for="{{plans}}" wx:key="id" data-id="{{item.id}}" bindtap="onSelectPlan">
+        <view class="popular-tag" wx:if="{{item.popular}}">热门推荐</view>
+        <text class="plan-name">{{item.name}}</text>
+        <view class="plan-points">
+          <text class="plan-points-num">{{item.points}}</text>
+          <text class="plan-points-unit">积分</text>
+        </view>
+        <view class="plan-bonus" wx:if="{{item.bonus > 0}}">
+          <text>额外送 {{item.bonus}} 积分</text>
+        </view>
+        <text class="plan-price">¥{{item.amount}}</text>
+        <view class="plan-check" wx:if="{{selectedPlan.id === item.id}}">
+          <text>✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="notice-section">
+    <text class="notice-title">充值说明</text>
+    <view class="notice-item">
+      <text class="notice-dot">•</text>
+      <text class="notice-text">积分可用于升级VIP等级，享受更多权益</text>
+    </view>
+    <view class="notice-item">
+      <text class="notice-dot">•</text>
+      <text class="notice-text">充值后积分即时到账，不可退款</text>
+    </view>
+    <view class="notice-item">
+      <text class="notice-dot">•</text>
+      <text class="notice-text">达到对应积分门槛将自动升级VIP等级</text>
+    </view>
+    <view class="notice-item">
+      <text class="notice-dot">•</text>
+      <text class="notice-text">如有疑问请联系客服</text>
+    </view>
+  </view>
+
+  <!-- 底部支付 -->
+  <view class="pay-bar safe-bottom">
+    <view class="pay-amount">
+      <text class="pay-amount-label">应付</text>
+      <text class="pay-amount-num">¥{{selectedPlan.amount}}</text>
+    </view>
+    <view class="pay-btn" bindtap="onPay">
+      <text>微信支付</text>
+    </view>
+  </view>
+
+</view>
+
+<!-- 支付中 -->
+<view class="paying-page" wx:if="{{step === 'paying'}}">
+  <view class="paying-icon-wrap">
+    <view class="paying-ring"></view>
+    <text class="paying-emoji">💳</text>
+  </view>
+  <text class="paying-title">支付处理中</text>
+  <text class="paying-desc">请稍候，正在处理您的支付...</text>
+</view>
+
+<!-- 支付成功 -->
+<view class="success-page" wx:if="{{step === 'success'}}">
+  <view class="success-icon-wrap">
+    <view class="success-burst"></view>
+    <text class="success-emoji">🎉</text>
+  </view>
+  <text class="success-title">充值成功！</text>
+  <view class="success-info">
+    <view class="success-info-row">
+      <text class="success-info-label">充值套餐</text>
+      <text class="success-info-value">{{selectedPlan.name}}</text>
+    </view>
+    <view class="success-info-row">
+      <text class="success-info-label">支付金额</text>
+      <text class="success-info-value">¥{{selectedPlan.amount}}</text>
+    </view>
+    <view class="success-info-row">
+      <text class="success-info-label">获得积分</text>
+      <text class="success-info-value highlight">+{{selectedPlan.points + selectedPlan.bonus}}</text>
+    </view>
+  </view>
+  <view class="success-actions">
+    <view class="btn btn-ghost btn-lg flex-1" bindtap="onBack">
+      <text>返回</text>
+    </view>
+    <view class="btn btn-primary btn-lg flex-1" bindtap="onViewVIP">
+      <text>查看权益</text>
+    </view>
+  </view>
+</view>

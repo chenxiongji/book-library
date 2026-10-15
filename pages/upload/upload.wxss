@@ -1,0 +1,344 @@
+/* pages/upload/upload.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx;
+}
+
+/* 选择文件 */
+.upload-guide {
+  padding-top: 60rpx;
+}
+
+.upload-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx;
+  background: #FFFFFF;
+  border: 4rpx dashed #4A6CF7;
+  border-radius: 24rpx;
+  margin-bottom: 40rpx;
+}
+
+.upload-emoji {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+}
+
+.upload-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #4A6CF7;
+  margin-bottom: 8rpx;
+}
+
+.upload-desc {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+/* 格式标签 */
+.format-section {
+  margin-bottom: 40rpx;
+}
+
+.format-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #4B5563;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.format-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.format-tag {
+  padding: 10rpx 24rpx;
+  background: #F5F6FA;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+/* 上传须知 */
+.tips-section {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 24rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #4B5563;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.tip-item {
+  display: flex;
+  gap: 12rpx;
+  padding: 8rpx 0;
+}
+
+.tip-dot {
+  color: #4A6CF7;
+  font-size: 26rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  line-height: 1.6;
+}
+
+/* 上传中 */
+.uploading-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.uploading-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+}
+
+.uploading-name {
+  font-size: 28rpx;
+  color: #1F2937;
+  font-weight: 500;
+  max-width: 500rpx;
+  margin-bottom: 48rpx;
+}
+
+.progress-ring {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  border: 12rpx solid #F5F6FA;
+  border-top-color: #4A6CF7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24rpx;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.progress-text {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #4A6CF7;
+  animation: counter-spin 1s linear infinite;
+}
+
+@keyframes counter-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.uploading-tip {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+/* 表单 */
+.form-section {
+  padding-bottom: 40rpx;
+}
+
+.file-info-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.file-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-emoji {
+  font-size: 40rpx;
+}
+
+.file-info-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 8rpx;
+}
+
+.file-meta {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+}
+
+.file-size {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+.re-upload {
+  padding: 8rpx 20rpx;
+  background: #F5F6FA;
+  border-radius: 12rpx;
+}
+
+.re-upload text {
+  font-size: 24rpx;
+  color: #6B7280;
+}
+
+/* 封面 */
+.cover-section {
+  margin-bottom: 24rpx;
+}
+
+.cover-upload {
+  width: 100%;
+  height: 280rpx;
+  background: #FFFFFF;
+  border: 2rpx dashed #D1D5DB;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cover-preview-img {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-placeholder-icon {
+  font-size: 60rpx;
+  margin-bottom: 12rpx;
+}
+
+.cover-placeholder-text {
+  font-size: 26rpx;
+  color: #9CA3AF;
+}
+
+/* 表单卡片 */
+.form-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 8rpx 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F3F4F6;
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.form-item-textarea {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.form-label {
+  width: 140rpx;
+  font-size: 28rpx;
+  color: #4B5563;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.required {
+  color: #EF4444;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1F2937;
+}
+
+.form-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #1F2937;
+}
+
+.picker-arrow {
+  color: #D1D5DB;
+  font-size: 32rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  color: #1F2937;
+  line-height: 1.6;
+}
+
+/* 成功 */
+.success-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.success-icon {
+  font-size: 120rpx;
+  margin-bottom: 32rpx;
+}
+
+.success-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.success-desc {
+  font-size: 26rpx;
+  color: #9CA3AF;
+}
+
+.btn.loading {
+  opacity: 0.6;
+}

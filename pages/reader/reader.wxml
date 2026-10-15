@@ -1,0 +1,232 @@
+<!-- pages/reader/reader.wxml — 微信读书风格阅读器 -->
+<view class="reader" style="background:{{theme.bg}};">
+
+  <!-- 加载中 -->
+  <view class="reader-loading" wx:if="{{loading}}">
+    <text style="color:{{theme.sub}};">正在加载书籍内容...</text>
+  </view>
+
+  <!-- 阅读区：横向滑动翻页 -->
+  <swiper wx:else class="reader-swiper" current="{{currentPage}}" duration="{{pageAnim ? 260 : 0}}"
+          easing-function="easeOutCubic" bindchange="onSwiperChange">
+    <swiper-item wx:for="{{pages}}" wx:key="index" wx:for-item="pageItem">
+      <view class="page-body" wx:if="{{index >= currentPage - 1 && index <= currentPage + 1}}"
+            bindtap="onPageTap" data-page-index="{{index}}">
+
+        <!-- 章节标题（仅章首页显示） -->
+        <view class="chapter-head" wx:if="{{chapters[pageItem.chapter].page === index}}">
+          <text class="chapter-head-text" style="color:{{theme.text}};">{{pageItem.chapterTitle}}</text>
+          <view class="chapter-head-line" style="background:{{theme.line}};"></view>
+        </view>
+
+        <!-- 正文行 -->
+        <block wx:for="{{pageItem.lines}}" wx:for-item="line" wx:for-index="li" wx:key="li">
+          <view wx:if="{{line.t === ''}}" class="p-gap" style="height:{{fontSize}}rpx;"></view>
+          <view wx:else
+                class="p-line {{line.first ? 'p-first' : ''}} {{hlMap[line.p] ? 'p-hl' : ''}}"
+                style="font-size:{{fontSize}}rpx; line-height:{{lineHeightOptions[lineHeightIdx].ratio}}; color:{{theme.text}};"
+                data-p="{{line.p}}" bindlongpress="onLineLongPress">
+            <text user-select="{{true}}">{{line.t}}</text>
+          </view>
+        </block>
+
+        <!-- 页脚：页码 + 书签标 -->
+        <view class="page-footer">
+          <text wx:if="{{bookmarkMap[index]}}" class="bm-flag" style="color:{{themeKey === 'dark' ? '#E8B84B' : '#E8912D'}};">🔖</text>
+          <text class="page-num" style="color:{{theme.sub}};">{{index + 1}} / {{totalPages}}</text>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 亮度遮罩 -->
+  <view class="brightness-mask" wx:if="{{brightness < 1}}" style="opacity:{{(1 - brightness) * 0.75}};"></view>
+</view>
+
+<!-- 悬浮操作按钮（微信读书风格） -->
+<view class="fabs" wx:if="{{!loading && !showMenu && !showSettings && !showCatalog && !showNoteEditor}}">
+  <view class="fab" catchtap="toggleCatalog">
+    <text class="fab-ico">☰</text>
+    <text class="fab-txt">目录</text>
+  </view>
+  <view class="fab" catchtap="toggleSettings">
+    <text class="fab-ico fab-aa">Aa</text>
+  </view>
+</view>
+
+<!-- 底部菜单栏 -->
+<view class="bottom-menu {{showMenu ? 'show' : ''}}" catchtap="closeAll">
+  <view class="menu-inner" style="background:{{theme.panel}};">
+    <!-- 进度滑杆 -->
+    <view class="slider-row">
+      <text class="slider-percent" style="color:{{theme.panelText}};">{{percentPreview != null ? percentPreview : percent}}%</text>
+      <slider class="progress-slider" min="0" max="100" value="{{percent}}" activeColor="#4A6CF7"
+              backgroundColor="{{themeKey === 'dark' ? '#3A3E45' : '#D8D8D8'}}" block-size="16"
+              catchchanging="onSliderChanging" catchchange="onSliderChange" />
+    </view>
+    <view class="slider-caption">
+      <text style="color:{{theme.sub}};">{{chapterTitle || '正文'}}</text>
+      <text style="color:{{theme.sub}};">{{previewPage != null && percentPreview != null ? (previewPage + 1) + '/' + totalPages : currentPage + 1 + '/' + totalPages}}</text>
+    </view>
+    <!-- 主操作行 -->
+    <view class="menu-row">
+      <view class="menu-btn" catchtap="onPrevChapter">
+        <text style="color:{{theme.panelText}};">上一章</text>
+      </view>
+      <view class="menu-btn" catchtap="toggleCatalog">
+        <text style="color:{{theme.panelText}};">目录</text>
+      </view>
+      <view class="menu-btn {{isBookmarked ? 'active' : ''}}" catchtap="toggleBookmark">
+        <text style="color:{{theme.panelText}};">{{isBookmarked ? '★ 已签' : '☆ 书签'}}</text>
+      </view>
+      <view class="menu-btn" catchtap="toggleCatalog" data-tab="notes">
+        <text style="color:{{theme.panelText}};">划线</text>
+      </view>
+      <view class="menu-btn" catchtap="onNextChapter">
+        <text style="color:{{theme.panelText}};">下一章</text>
+      </view>
+    </view>
+    <!-- 界面行 -->
+    <view class="menu-row menu-row-secondary">
+      <view class="menu-btn" catchtap="toggleSettings">
+        <text style="color:{{theme.panelText}};">Aa 界面</text>
+      </view>
+      <view class="menu-btn" catchtap="onToggleNight">
+        <text style="color:{{theme.panelText}};">{{themeKey === 'dark' ? '☀ 日间' : '☾ 夜间'}}</text>
+      </view>
+      <view class="menu-btn" catchtap="onPageAnimToggle">
+        <text style="color:{{theme.panelText}};">动画 {{pageAnim ? '开' : '关'}}</text>
+      </view>
+      <view class="menu-btn">
+        <button class="share-btn" open-type="share" plain>分享</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 设置面板（Aa 界面） -->
+<view class="settings-sheet {{showSettings ? 'show' : ''}}" catchtap="" style="background:{{theme.panel}};">
+  <!-- 字号 -->
+  <view class="sheet-row">
+    <view class="round-btn" catchtap="onFontSizeChange" data-dir="sub" style="border-color:{{theme.line}};">
+      <text style="color:{{theme.panelText}}; font-size:26rpx;">A-</text>
+    </view>
+    <view class="font-preview" style="color:{{theme.panelText}};">
+      <text style="font-size:{{fontSize + 6}}rpx;">{{fontSize}}</text>
+    </view>
+    <view class="round-btn" catchtap="onFontSizeChange" data-dir="add" style="border-color:{{theme.line}};">
+      <text style="color:{{theme.panelText}}; font-size:34rpx;">A+</text>
+    </view>
+  </view>
+  <!-- 行距 -->
+  <view class="sheet-row">
+    <text class="sheet-label" style="color:{{theme.sub}};">行距</text>
+    <view class="seg-group">
+      <view class="seg-btn {{lineHeightIdx === index ? 'seg-active' : ''}}"
+            wx:for="{{lineHeightOptions}}" wx:key="index"
+            data-index="{{index}}" catchtap="onLineHeightChange">
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 背景 -->
+  <view class="sheet-row">
+    <text class="sheet-label" style="color:{{theme.sub}};">背景</text>
+    <view class="theme-group">
+      <view class="theme-dot theme-white {{themeKey === 'white' ? 'dot-active' : ''}}" data-theme="white" catchtap="onThemeChange"></view>
+      <view class="theme-dot theme-paper {{themeKey === 'paper' ? 'dot-active' : ''}}" data-theme="paper" catchtap="onThemeChange"></view>
+      <view class="theme-dot theme-green {{themeKey === 'green' ? 'dot-active' : ''}}" data-theme="green" catchtap="onThemeChange"></view>
+      <view class="theme-dot theme-dark {{themeKey === 'dark' ? 'dot-active' : ''}}" data-theme="dark" catchtap="onThemeChange"></view>
+    </view>
+  </view>
+  <!-- 亮度 -->
+  <view class="sheet-row sheet-row-slider">
+    <text class="sheet-label" style="color:{{theme.sub}};">☀</text>
+    <slider class="brightness-slider" min="0.3" max="1" step="0.05" value="{{brightness}}"
+            activeColor="#E8B84B" backgroundColor="{{themeKey === 'dark' ? '#3A3E45' : '#D8D8D8'}}"
+            block-size="16" catchchanging="onBrightnessChange" catchchange="onBrightnessEnd" />
+    <text class="sheet-label" style="color:{{theme.sub}};">☀☀</text>
+  </view>
+</view>
+
+<!-- 目录 / 书签 / 划线 面板 -->
+<view class="catalog-sheet {{showCatalog ? 'show' : ''}}" catchtap="" style="background:{{theme.panel}};">
+  <view class="catalog-tabs" style="border-color:{{theme.line}};">
+    <view class="catalog-tab {{catalogTab === 'chapters' ? 'tab-active' : ''}}" data-tab="chapters" catchtap="onCatalogTab">
+      <text style="color:{{theme.panelText}};">目录 {{chapters.length}}</text>
+    </view>
+    <view class="catalog-tab {{catalogTab === 'bookmarks' ? 'tab-active' : ''}}" data-tab="bookmarks" catchtap="onCatalogTab">
+      <text style="color:{{theme.panelText}};">书签</text>
+    </view>
+    <view class="catalog-tab {{catalogTab === 'notes' ? 'tab-active' : ''}}" data-tab="notes" catchtap="onCatalogTab">
+      <text style="color:{{theme.panelText}};">划线/想法 {{highlights.length}}</text>
+    </view>
+  </view>
+
+  <!-- 目录列表 -->
+  <scroll-view scroll-y class="catalog-scroll" wx:if="{{catalogTab === 'chapters'}}">
+    <view class="chapter-item" wx:for="{{chapters}}" wx:key="paraIndex"
+          data-index="{{index}}" catchtap="onChapterTap">
+      <text class="chapter-title {{pages[currentPage].chapter === index ? 'chapter-current' : ''}}"
+            style="color:{{pages[currentPage].chapter === index ? '#4A6CF7' : theme.panelText}};">{{item.title}}</text>
+      <text class="chapter-page" style="color:{{theme.sub}};">{{item.page + 1}}页</text>
+    </view>
+  </scroll-view>
+
+  <!-- 书签列表 -->
+  <scroll-view scroll-y class="catalog-scroll" wx:elif="{{catalogTab === 'bookmarks'}}">
+    <block wx:for="{{bookmarkPages}}" wx:key="page">
+      <view class="chapter-item" data-page="{{item}}" catchtap="onBookmarkTap">
+        <text class="chapter-title" style="color:{{theme.panelText}};">🔖 第 {{item + 1}} 页</text>
+        <text class="chapter-page" style="color:{{theme.sub}};">{{pages[item].chapterTitle}}</text>
+      </view>
+    </block>
+    <view class="empty-hint" wx:if="{{bookmarkPages.length === 0}}">
+      <text style="color:{{theme.sub}};">暂无书签，点击底部「书签」可收藏当前页</text>
+    </view>
+  </scroll-view>
+
+  <!-- 划线 / 想法列表 -->
+  <scroll-view scroll-y class="catalog-scroll" wx:elif="{{catalogTab === 'notes'}}">
+    <view class="hl-item" wx:for="{{highlights}}" wx:key="id">
+      <view class="hl-quote" data-page="{{item.page}}" catchtap="onHighlightTap">
+        <view class="hl-quote-bar"></view>
+        <view class="hl-quote-body">
+          <text class="hl-text" style="color:{{theme.panelText}};">{{item.text}}</text>
+          <view class="hl-note" wx:if="{{item.note}}">
+            <text class="hl-note-tag">想法</text>
+            <text class="hl-note-text" style="color:{{theme.panelText}};">{{item.note}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="hl-meta">
+        <text style="color:{{theme.sub}};">{{item.page + 1}}页 · {{item.type === 'note' ? '想法' : '划线'}}</text>
+        <text class="hl-delete" data-id="{{item.id}}" catchtap="onDeleteHighlight" style="color:{{theme.sub}};">删除</text>
+      </view>
+    </view>
+    <view class="empty-hint" wx:if="{{highlights.length === 0}}">
+      <text style="color:{{theme.sub}};">长按正文段落即可划线或写想法</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 遮罩 -->
+<view class="overlay {{showMenu || showSettings || showCatalog || showNoteEditor ? 'show' : ''}}" catchtap="closeAll"></view>
+
+<!-- 写想法弹窗 -->
+<view class="note-modal {{showNoteEditor ? 'show' : ''}}" catchtap="">
+  <view class="note-modal-body">
+    <view class="note-quote" wx:if="{{noteQuote}}">
+      <text>"{{noteQuote.length > 60 ? noteQuote.slice(0, 60) + '...' : noteQuote}}"</text>
+    </view>
+    <textarea class="note-input" placeholder="写下你的想法..." value="{{noteText}}"
+              bindinput="onNoteInput" maxlength="500" catchtap=""></textarea>
+    <view class="note-actions">
+      <text class="note-count">{{noteText.length}}/500</text>
+      <view class="note-btns">
+        <view class="note-btn note-btn-cancel" catchtap="onNoteCancel"><text>取消</text></view>
+        <view class="note-btn note-btn-save" catchtap="onNoteSave"><text>发布</text></view>
+      </view>
+    </view>
+  </view>
+</view>

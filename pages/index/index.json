@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "book-card": "/components/book-card/book-card",
+    "empty-state": "/components/empty-state/empty-state",
+    "vip-badge": "/components/vip-badge/vip-badge"
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "阳光读书"
+}

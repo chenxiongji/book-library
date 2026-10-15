@@ -1,0 +1,108 @@
+/* pages/admin/admin.wxss */
+.page {
+  min-height: 100vh;
+  background: #F5F6FA;
+  padding: 24rpx 0 80rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.board {
+  background: #fff;
+  margin: 0 24rpx;
+  border-radius: 20rpx;
+  padding: 20rpx 0;
+  box-shadow: 0 2rpx 8rpx rgba(17, 24, 39, 0.04);
+}
+
+.group-title-wrap {
+  padding: 20rpx 32rpx 4rpx;
+}
+
+.group-title {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+/* 3列宫格 */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 0 24rpx;
+}
+
+.grid-item.placeholder {
+  padding: 30rpx 0 24rpx;
+}
+
+.icon-wrap {
+  position: relative;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 24rpx;
+  background: #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14rpx;
+}
+
+.item-icon {
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+.red-dot {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #E02020;
+  border: 3rpx solid #fff;
+}
+
+.item-name {
+  font-size: 26rpx;
+  color: #374151;
+}
+
+.grid-item:active .icon-wrap {
+  background: #EEF1FE;
+}
+
+/* 组分隔线 */
+.group-divider {
+  height: 16rpx;
+  background: #F5F6FA;
+  margin: 16rpx 0;
+}
+
+/* 底部客服 */
+.footer {
+  margin-top: auto;
+  padding: 60rpx 40rpx 20rpx;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.footer-text {
+  font-size: 24rpx;
+  color: #B0B4BC;
+}
+
+.footer-link {
+  font-size: 24rpx;
+  color: #4A6CF7;
+  font-weight: 500;
+}

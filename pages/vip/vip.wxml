@@ -1,0 +1,115 @@
+<!-- pages/vip/vip.wxml -->
+<view class="page" wx:if="{{userInfo}}">
+
+  <!-- VIP卡片头部 -->
+  <view class="vip-header" style="background: linear-gradient(135deg, {{currentLevel.color}}, {{currentLevel.color}}cc);">
+    <view class="vip-header-content">
+      <view class="vip-user-row">
+        <view class="vip-avatar">
+          <text>{{userInfo.name[0]}}</text>
+        </view>
+        <view class="vip-user-info">
+          <text class="vip-user-name">{{userInfo.name}}</text>
+          <view class="vip-level-badge">
+            <text class="vip-level-icon">{{currentLevel.icon}}</text>
+            <text class="vip-level-name">{{currentLevel.name}}</text>
+          </view>
+        </view>
+        <view class="vip-points-display">
+          <text class="vip-points-num">{{userInfo.vipPoints}}</text>
+          <text class="vip-points-label">积分</text>
+        </view>
+      </view>
+
+      <!-- 等级进度 -->
+      <view class="level-progress-section">
+        <view class="level-progress-bar">
+          <view class="level-progress-fill" style="width: {{levelProgress}}%; background: rgba(255,255,255,0.6);"></view>
+        </view>
+        <view class="level-progress-info">
+          <text class="level-current">{{currentLevel.name}}</text>
+          <text class="level-next" wx:if="{{nextLevel}}">距{{nextLevel.name}}还需{{nextLevel.minPoints - userInfo.vipPoints}}积分</text>
+          <text class="level-max" wx:else>已达到最高等级</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷统计 -->
+  <view class="quick-stats">
+    <view class="quick-stat-item">
+      <text class="quick-stat-num">{{userInfo.totalBorrowed || 0}}</text>
+      <text class="quick-stat-label">累计借阅</text>
+    </view>
+    <view class="quick-stat-item">
+      <text class="quick-stat-num">{{stats.totalBooks}}</text>
+      <text class="quick-stat-label">书库总量</text>
+    </view>
+    <view class="quick-stat-item">
+      <text class="quick-stat-num">{{userInfo.balance || 0}}</text>
+      <text class="quick-stat-label">账户余额</text>
+    </view>
+  </view>
+
+  <!-- 当前权益 -->
+  <view class="section">
+    <text class="section-title">{{currentLevel.icon}} 当前权益</text>
+    <view class="benefits-list">
+      <view class="benefit-item" wx:for="{{currentLevel.benefits}}" wx:key="*this">
+        <text class="benefit-check">✓</text>
+        <text class="benefit-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 充值入口 -->
+  <view class="recharge-cta" bindtap="onRecharge">
+    <view class="recharge-cta-left">
+      <text class="recharge-cta-icon">💰</text>
+      <view class="recharge-cta-text">
+        <text class="recharge-cta-title">充值积分</text>
+        <text class="recharge-cta-desc">充值越多，送越多，快速升级</text>
+      </view>
+    </view>
+    <text class="recharge-cta-arrow">去充值 ›</text>
+  </view>
+
+  <!-- 等级体系 -->
+  <view class="section">
+    <text class="section-title">🏆 等级体系</text>
+    <view class="levels-list">
+      <view class="level-card {{item.level === currentLevel.level ? 'current' : ''}} {{item.level < currentLevel.level ? 'passed' : ''}}" wx:for="{{allLevels}}" wx:key="level" data-level="{{item.level}}" bindtap="onLevelTap">
+        <view class="level-card-header" style="background: {{item.color}}15;">
+          <text class="level-card-icon">{{item.icon}}</text>
+          <view class="level-card-info">
+            <text class="level-card-name" style="color: {{item.color}};">{{item.name}}</text>
+            <text class="level-card-points">{{item.minPoints}}+ 积分</text>
+          </view>
+          <text class="level-card-status" wx:if="{{item.level === currentLevel.level}}">当前</text>
+          <text class="level-card-status passed" wx:if="{{item.level < currentLevel.level}}">已达</text>
+        </view>
+        <view class="level-card-benefits">
+          <text class="level-benefit-text" wx:for="{{item.benefits}}" wx:for-item="benefit" wx:key="*this">· {{benefit}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 充值记录 -->
+  <view class="section" wx:if="{{rechargeHistory.length > 0}}">
+    <text class="section-title">📋 充值记录</text>
+    <view class="recharge-list">
+      <view class="recharge-item" wx:for="{{rechargeHistory}}" wx:key="id">
+        <view class="recharge-item-left">
+          <text class="recharge-item-name">{{item.planName}}</text>
+          <text class="recharge-item-date">{{item.dateFormatted}}</text>
+        </view>
+        <view class="recharge-item-right">
+          <text class="recharge-item-points">+{{item.points}} 积分</text>
+          <text class="recharge-item-amount">¥{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

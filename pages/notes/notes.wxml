@@ -1,0 +1,73 @@
+<!-- pages/notes/notes.wxml -->
+<view class="page">
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索笔记、书名" value="{{searchKeyword}}" bindinput="onSearchInput" />
+    </view>
+  </view>
+
+  <!-- 筛选Tab -->
+  <view class="filter-bar">
+    <view class="filter-item {{activeFilter === item.key ? 'active' : ''}}" wx:for="{{filters}}" wx:key="key" data-key="{{item.key}}" bindtap="onFilterTap">
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 笔记列表 -->
+  <view class="notes-list">
+    <empty-state wx:if="{{notes.length === 0}}" icon="📝" text="暂无笔记" subText="分享你的阅读感悟吧" actionText="写笔记" bind:action="onWriteNote" />
+
+    <view class="note-card" wx:for="{{notes}}" wx:key="id" data-id="{{item.id}}" bindtap="onNoteTap">
+      <!-- 用户信息 -->
+      <view class="note-user-row">
+        <view class="note-user-avatar" style="background: linear-gradient(135deg, #4A6CF7, #6B8AFF);">
+          <text>{{item.userName[0]}}</text>
+        </view>
+        <view class="note-user-info">
+          <text class="note-user-name">{{item.userName}}</text>
+          <text class="note-time">{{item.timeAgo}}</text>
+        </view>
+      </view>
+
+      <!-- 笔记标题和内容 -->
+      <text class="note-title">{{item.title}}</text>
+      <text class="note-content text-ellipsis-3">{{item.content}}</text>
+
+      <!-- 关联图书 -->
+      <view class="note-book-row" data-bookid="{{item.bookId}}" catchtap="onBookTap">
+        <image class="note-book-cover" src="{{item.bookCover || '/images/book-default.png'}}" mode="aspectFill" />
+        <view class="note-book-info">
+          <text class="note-book-title text-ellipsis">《{{item.bookTitle}}》</text>
+          <text class="note-book-chapter" wx:if="{{item.chapter}}">{{item.chapter}}</text>
+        </view>
+        <text class="note-book-arrow">›</text>
+      </view>
+
+      <!-- 互动栏 -->
+      <view class="note-interaction">
+        <view class="interaction-item {{item.liked ? 'liked' : ''}}" data-id="{{item.id}}" catchtap="onLike">
+          <text class="interaction-icon">{{item.liked ? '❤️' : '🤍'}}</text>
+          <text class="interaction-count">{{item.likes}}</text>
+        </view>
+        <view class="interaction-item">
+          <text class="interaction-icon">💬</text>
+          <text class="interaction-count">{{item.comments}}</text>
+        </view>
+        <view class="interaction-item">
+          <text class="interaction-icon">🔗</text>
+          <text class="interaction-count">分享</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 写笔记悬浮按钮 -->
+  <view class="fab-btn" bindtap="onWriteNote">
+    <text class="fab-icon">✏️</text>
+    <text class="fab-text">写笔记</text>
+  </view>
+
+</view>

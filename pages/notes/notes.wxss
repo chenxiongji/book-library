@@ -1,0 +1,225 @@
+/* pages/notes/notes.wxss */
+.page {
+  min-height: 100vh;
+  padding: 24rpx;
+  padding-bottom: 140rpx;
+}
+
+/* 搜索 */
+.search-bar {
+  margin-bottom: 24rpx;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: #FFFFFF;
+  padding: 16rpx 24rpx;
+  border-radius: 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.search-icon {
+  font-size: 28rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #1F2937;
+}
+
+/* 筛选 */
+.filter-bar {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.filter-item {
+  padding: 12rpx 32rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #6B7280;
+  background: #FFFFFF;
+  font-weight: 500;
+}
+
+.filter-item.active {
+  background: #4A6CF7;
+  color: #FFFFFF;
+}
+
+/* 笔记列表 */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.note-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+/* 用户信息 */
+.note-user-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.note-user-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.note-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.note-user-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.note-time {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+/* 笔记内容 */
+.note-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.note-content {
+  font-size: 28rpx;
+  color: #4B5563;
+  line-height: 1.7;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+/* 关联图书 */
+.note-book-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background: #F9FAFB;
+  border-radius: 12rpx;
+}
+
+.note-book-cover {
+  width: 56rpx;
+  height: 72rpx;
+  border-radius: 6rpx;
+  flex-shrink: 0;
+  background: #F3F4F6;
+}
+
+.note-book-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.note-book-title {
+  font-size: 24rpx;
+  color: #4B5563;
+  font-weight: 500;
+}
+
+.note-book-chapter {
+  font-size: 20rpx;
+  color: #9CA3AF;
+}
+
+.note-book-arrow {
+  font-size: 28rpx;
+  color: #D1D5DB;
+}
+
+/* 互动栏 */
+.note-interaction {
+  display: flex;
+  gap: 32rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #F3F4F6;
+}
+
+.interaction-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.interaction-item.liked .interaction-icon {
+  animation: pop 0.3s;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.interaction-icon {
+  font-size: 28rpx;
+}
+
+.interaction-count {
+  font-size: 24rpx;
+  color: #6B7280;
+}
+
+.interaction-item.liked .interaction-count {
+  color: #EF4444;
+}
+
+/* 悬浮按钮 */
+.fab-btn {
+  position: fixed;
+  right: 32rpx;
+  bottom: 180rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 32rpx;
+  background: linear-gradient(135deg, #4A6CF7, #6B8AFF);
+  border-radius: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(74, 108, 247, 0.4);
+  z-index: 50;
+}
+
+.fab-icon {
+  font-size: 32rpx;
+}
+
+.fab-text {
+  font-size: 26rpx;
+  color: #FFFFFF;
+  font-weight: 500;
+}

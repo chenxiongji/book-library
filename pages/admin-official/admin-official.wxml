@@ -1,0 +1,52 @@
+<!-- pages/admin-official/admin-official.wxml -->
+<view class="page">
+
+  <!-- 关联状态 -->
+  <view class="card">
+    <view class="cell">
+      <text style="font-size:44rpx;margin-right:20rpx;">{{official.bound ? '✅' : '💬'}}</text>
+      <view class="cell-main">
+        <view class="cell-title">
+          {{official.bound ? official.name : '尚未关联公众号'}}
+        </view>
+        <view class="cell-sub" wx:if="{{official.bound}}">
+          原始ID：{{official.originId}} · 关联于 {{official.boundAt}}
+        </view>
+        <view class="cell-sub" wx:else>关联后可在公众号中触达读者</view>
+      </view>
+    </view>
+    <view class="cell" wx:if="{{official.bound}}" bindtap="onCopyId">
+      <view class="cell-main"><view class="cell-title">复制原始 ID</view></view>
+      <text class="cell-arrow">⧉</text>
+    </view>
+  </view>
+
+  <!-- 填写信息 -->
+  <view class="card">
+    <view class="card-title">{{official.bound ? '修改关联信息' : '填写公众号信息'}}</view>
+
+    <view class="form-item">
+      <view class="form-label">公众号名称<text class="req">*</text></view>
+      <input class="form-input" placeholder="如：阳光读书图书馆" value="{{nameInput}}" bindinput="bindName" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">原始 ID<text class="req">*</text></view>
+      <input class="form-input" placeholder="gh_ 开头，可在公众号后台查看" value="{{originIdInput}}" bindinput="bindOriginId" />
+    </view>
+
+    <view class="btn" bindtap="onBind">保存关联信息</view>
+    <view class="btn danger" wx:if="{{official.bound}}" bindtap="onUnbind">取消关联</view>
+  </view>
+
+  <!-- 说明 -->
+  <view class="card">
+    <view class="card-title">关联说明</view>
+    <view class="card-tip">
+      1. 公众号与小程序需为同一主体或已建立关联关系；
+      2. 正式关联请在微信公众平台「小程序管理 → 关联公众号」中操作；
+      3. 关联后，读者可在公众号菜单中快速打开本小程序，也可接收借阅到期提醒等消息推送。
+    </view>
+  </view>
+
+</view>

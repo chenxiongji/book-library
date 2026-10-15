@@ -1,0 +1,56 @@
+<!-- pages/note-detail/note-detail.wxml -->
+<view class="page" wx:if="{{note}}">
+
+  <!-- 用户信息 -->
+  <view class="user-section">
+    <view class="user-avatar" style="background: linear-gradient(135deg, #4A6CF7, #6B8AFF);">
+      <text>{{note.userName[0]}}</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{note.userName}}</text>
+      <text class="note-time">{{timeAgo}}</text>
+    </view>
+    <view class="follow-btn">
+      <text>+ 关注</text>
+    </view>
+  </view>
+
+  <!-- 笔记内容 -->
+  <view class="content-section">
+    <text class="note-title">{{note.title}}</text>
+    <view class="note-content-box">
+      <text class="note-content">{{note.content}}</text>
+    </view>
+  </view>
+
+  <!-- 关联图书 -->
+  <view class="book-card" bindtap="onBookTap">
+    <image class="book-cover" src="{{note.bookCover || '/images/book-default.png'}}" mode="aspectFill" />
+    <view class="book-info">
+      <text class="book-title text-ellipsis">《{{note.bookTitle}}》</text>
+      <text class="book-chapter" wx:if="{{note.chapter}}">{{note.chapter}}</text>
+      <text class="book-action">查看图书详情 ›</text>
+    </view>
+  </view>
+
+  <!-- 互动栏 -->
+  <view class="interaction-section">
+    <view class="interaction-item {{note.liked ? 'liked' : ''}}" bindtap="onLike">
+      <text class="interaction-icon">{{note.liked ? '❤️' : '🤍'}}</text>
+      <text class="interaction-count">{{note.likes}}</text>
+    </view>
+    <view class="interaction-item {{favorited ? 'liked' : ''}}" bindtap="onToggleFavorite">
+      <text class="interaction-icon">{{favorited ? '⭐' : '☆'}}</text>
+      <text class="interaction-count">{{favorited ? '已收藏' : '收藏'}}</text>
+    </view>
+    <view class="interaction-item">
+      <text class="interaction-icon">💬</text>
+      <text class="interaction-count">{{note.comments}}</text>
+    </view>
+    <button class="interaction-item share-btn" open-type="share">
+      <text class="interaction-icon">🔗</text>
+      <text class="interaction-count">分享</text>
+    </button>
+  </view>
+
+</view>

@@ -1,0 +1,20 @@
+<!-- pages/admin-tags/admin-tags.wxml -->
+<view class="page">
+
+  <view class="card">
+    <view class="card-title">图书标签</view>
+    <view class="card-tip">点击标签可更换颜色、重命名或删除。共 {{tags.length}} 个标签。</view>
+    <view class="cell" wx:for="{{tags}}" wx:key="id" data-id="{{item.id}}" bindtap="onItemTap">
+      <view class="dot-color" style="background: {{item.color}};"></view>
+      <view class="cell-main">
+        <view class="cell-title">
+          <text class="badge" style="background: {{item.color}}22; color: {{item.color}};">{{item.name}}</text>
+        </view>
+      </view>
+      <text class="cell-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="btn" bindtap="onAdd">＋ 新增标签</view>
+
+</view>

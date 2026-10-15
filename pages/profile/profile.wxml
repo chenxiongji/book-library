@@ -1,0 +1,103 @@
+<!-- pages/profile/profile.wxml -->
+<view class="page" wx:if="{{userInfo}}">
+
+  <!-- 用户信息头部 -->
+  <view class="profile-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="user-card">
+        <view class="user-avatar-lg" style="background: linear-gradient(135deg, #4A6CF7, #6B8AFF);">
+          <image wx:if="{{userInfo.avatar}}" class="user-avatar-img" src="{{userInfo.avatar}}" mode="aspectFill" />
+          <text wx:else>{{userInfo.name[0]}}</text>
+        </view>
+        <view class="user-detail">
+          <view class="user-name-row">
+            <text class="user-name-lg">{{userInfo.name}}</text>
+            <vip-badge level="{{userInfo.vipLevel}}" size="sm" />
+          </view>
+          <text class="user-phone">{{userInfo.phone || '未绑定手机'}}</text>
+          <view class="user-stats-row">
+            <view class="user-stat">
+              <text class="user-stat-num">{{userInfo.totalBorrowed || 0}}</text>
+              <text class="user-stat-label">借阅</text>
+            </view>
+            <view class="user-stat-divider"></view>
+            <view class="user-stat">
+              <text class="user-stat-num">{{userInfo.totalRead || 0}}</text>
+              <text class="user-stat-label">已读</text>
+            </view>
+            <view class="user-stat-divider"></view>
+            <view class="user-stat">
+              <text class="user-stat-num">{{userInfo.totalNotes || 0}}</text>
+              <text class="user-stat-label">笔记</text>
+            </view>
+          </view>
+        </view>
+        <view class="edit-btn" bindtap="onEditProfile">
+          <text>编辑</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- VIP状态卡片 -->
+  <view class="vip-card" bindtap="onVIP">
+    <view class="vip-card-left">
+      <text class="vip-card-icon">{{levelInfo.icon}}</text>
+      <view class="vip-card-info">
+        <text class="vip-card-title">{{levelInfo.name}}</text>
+        <text class="vip-card-desc" wx:if="{{nextLevel}}">距{{nextLevel.name}}还需{{nextLevel.minPoints - userInfo.vipPoints}}积分</text>
+        <text class="vip-card-desc" wx:else>已达到最高等级</text>
+      </view>
+    </view>
+    <view class="vip-card-right">
+      <text class="vip-card-points">{{userInfo.vipPoints}}</text>
+      <text class="vip-card-points-label">积分</text>
+    </view>
+  </view>
+
+  <!-- 快捷统计 -->
+  <view class="quick-stats">
+    <view class="quick-stat-card" data-id="borrows" bindtap="onMenuTap">
+      <text class="quick-stat-icon">📋</text>
+      <text class="quick-stat-num">{{stats.activeBorrows}}</text>
+      <text class="quick-stat-label">借阅中</text>
+    </view>
+    <view class="quick-stat-card" data-id="ebooks" bindtap="onMenuTap">
+      <text class="quick-stat-icon">📱</text>
+      <text class="quick-stat-num">{{stats.electronicCount}}</text>
+      <text class="quick-stat-label">电子书</text>
+    </view>
+    <view class="quick-stat-card" data-id="notes" bindtap="onMenuTap">
+      <text class="quick-stat-icon">📝</text>
+      <text class="quick-stat-num">{{userInfo.myNotesCount || 0}}</text>
+      <text class="quick-stat-label">我的笔记</text>
+    </view>
+    <view class="quick-stat-card" data-id="vip" bindtap="onMenuTap">
+      <text class="quick-stat-icon">👑</text>
+      <text class="quick-stat-num">VIP{{userInfo.vipLevel}}</text>
+      <text class="quick-stat-label">等级</text>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-section" wx:for="{{menuGroups}}" wx:key="title" wx:for-item="group">
+    <text class="menu-section-title">{{group.title}}</text>
+    <view class="menu-card">
+      <view class="menu-item {{index === group.items.length - 1 ? 'last' : ''}}" wx:for="{{group.items}}" wx:key="id" wx:for-item="item" wx:for-index="index" data-id="{{item.id}}" bindtap="onMenuTap">
+        <view class="menu-item-icon" style="background: {{item.color}}15;">
+          <text>{{item.icon}}</text>
+        </view>
+        <text class="menu-item-name">{{item.name}}</text>
+        <text class="menu-item-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部 -->
+  <view class="footer">
+    <text class="footer-text">阳光读书 v1.0.0</text>
+    <text class="footer-sub">让阅读更美好</text>
+  </view>
+
+</view>

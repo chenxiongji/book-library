@@ -1,0 +1,82 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/favorites/favorites",
+    "pages/profile-edit/profile-edit",
+    "pages/add-book/add-book",
+    "pages/library/library",
+    "pages/notes/notes",
+    "pages/profile/profile",
+    "pages/settings/settings",
+    "pages/scan/scan",
+    "pages/upload/upload",
+    "pages/reader/reader",
+    "pages/borrow/borrow",
+    "pages/vip/vip",
+    "pages/book-detail/book-detail",
+    "pages/bookshelf/bookshelf",
+    "pages/admin/admin",
+    "pages/note-detail/note-detail",
+    "pages/recharge/recharge",
+    "pages/note-edit/note-edit",
+    "pages/book-edit/book-edit",
+    "pages/admin-users/admin-users",
+    "pages/admin-categories/admin-categories",
+    "pages/admin-tags/admin-tags",
+    "pages/admin-fields/admin-fields",
+    "pages/admin-room/admin-room",
+    "pages/admin-settings/admin-settings",
+    "pages/admin-notices/admin-notices",
+    "pages/admin-contact/admin-contact",
+    "pages/admin-official/admin-official",
+    "pages/admin-admins/admin-admins"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4A6CF7",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "阳光读书",
+    "backgroundColor": "#F5F6FA",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4A6CF7",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/library/library",
+        "text": "书库",
+        "iconPath": "images/tab-library.png",
+        "selectedIconPath": "images/tab-library-active.png"
+      },
+      {
+        "pagePath": "pages/notes/notes",
+        "text": "笔记",
+        "iconPath": "images/tab-notes.png",
+        "selectedIconPath": "images/tab-notes-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "book-card": "/components/book-card/book-card",
+    "empty-state": "/components/empty-state/empty-state",
+    "vip-badge": "/components/vip-badge/vip-badge"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

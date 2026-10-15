@@ -1,0 +1,70 @@
+<!-- pages/note-edit/note-edit.wxml -->
+<view class="page">
+
+  <!-- 选择图书 -->
+  <view class="book-select-section" bindtap="onShowBookPicker">
+    <block wx:if="{{selectedBook}}">
+      <image class="select-book-cover" src="{{selectedBook.cover || '/images/book-default.png'}}" mode="aspectFill" />
+      <view class="select-book-info">
+        <text class="select-book-title text-ellipsis">{{selectedBook.title}}</text>
+        <text class="select-book-author text-ellipsis">{{selectedBook.author}}</text>
+      </view>
+      <text class="select-arrow">更换 ›</text>
+    </block>
+    <block wx:else>
+      <view class="select-placeholder">
+        <text class="select-placeholder-icon">📚</text>
+        <text class="select-placeholder-text">选择关联图书</text>
+      </view>
+      <text class="select-arrow">›</text>
+    </block>
+  </view>
+
+  <!-- 笔记编辑区 -->
+  <view class="edit-card">
+    <input class="title-input" placeholder="笔记标题（必填）" value="{{noteTitle}}" bindinput="onTitleInput" maxlength="50" />
+
+    <view class="divider"></view>
+
+    <input class="chapter-input" placeholder="关联章节（选填），如：第三章 领悟" value="{{noteChapter}}" bindinput="onChapterInput" maxlength="30" />
+
+    <view class="divider"></view>
+
+    <textarea class="content-input" placeholder="写下你的阅读感悟、思考或摘录..." value="{{noteContent}}" bindinput="onContentInput" maxlength="2000" auto-height />
+
+    <view class="content-footer">
+      <text class="content-count">{{contentLength}}/2000</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <view class="btn btn-ghost btn-lg flex-1" bindtap="onCancel">
+      <text>取消</text>
+    </view>
+    <view class="btn btn-primary btn-lg flex-1 {{saving ? 'loading' : ''}}" bindtap="onSave">
+      <text>{{saving ? '发布中...' : '发布笔记'}}</text>
+    </view>
+  </view>
+
+</view>
+
+<!-- 图书选择弹窗 -->
+<view class="book-picker-overlay {{showBookPicker ? 'show' : ''}}" bindtap="onHideBookPicker">
+  <view class="book-picker" catchtap="">
+    <view class="picker-header">
+      <text class="picker-title">选择关联图书</text>
+      <text class="picker-close" bindtap="onHideBookPicker">✕</text>
+    </view>
+    <scroll-view scroll-y class="picker-list">
+      <view class="picker-item" wx:for="{{books}}" wx:key="id" data-book="{{item}}" bindtap="onSelectBook">
+        <image class="picker-book-cover" src="{{item.cover || '/images/book-default.png'}}" mode="aspectFill" />
+        <view class="picker-book-info">
+          <text class="picker-book-title text-ellipsis">{{item.title}}</text>
+          <text class="picker-book-author text-ellipsis">{{item.author}}</text>
+          <text class="picker-book-category">{{item.category}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+/* components/vip-badge/vip-badge.wxss */
+.vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: 600;
+  border: 2rpx solid;
+}
+
+.vip-icon {
+  font-size: inherit;
+}
+
+/* 尺寸 */
+.vip-badge--sm {
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+}
+
+.vip-badge--md {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+}
+
+.vip-badge--lg {
+  font-size: 28rpx;
+  padding: 8rpx 24rpx;
+}

@@ -1,0 +1,144 @@
+<!-- pages/index/index.wxml -->
+<view class="page">
+
+  <!-- 顶部用户区域 -->
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="user-row" bindtap="onSearchTap">
+        <view class="user-info" wx:if="{{userInfo}}">
+          <text class="greeting">你好，{{userInfo.name}}</text>
+          <view class="user-badge-row">
+            <vip-badge level="{{userInfo.vipLevel}}" size="sm" />
+            <text class="user-points">{{userInfo.vipPoints}} 积分</text>
+          </view>
+        </view>
+        <view class="search-trigger">
+          <text class="search-icon">🔍</text>
+          <text class="search-placeholder">搜索图书、作者、ISBN</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="stats-bar" wx:if="{{stats}}">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalBooks}}</text>
+      <text class="stat-label">藏书总量</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.activeBorrows}}</text>
+      <text class="stat-label">借阅中</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.electronicCount}}</text>
+      <text class="stat-label">电子书</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalNotes}}</text>
+      <text class="stat-label">阅读笔记</text>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <view class="banner-section">
+    <swiper class="banner-swiper" indicator-dots circular autoplay interval="4000" duration="500" indicator-active-color="#4A6CF7">
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <view class="banner-item" style="background: linear-gradient(135deg, {{item.color}}, {{item.color}}dd);">
+          <view class="banner-text">
+            <text class="banner-title">{{item.title}}</text>
+            <text class="banner-subtitle">{{item.subtitle}}</text>
+          </view>
+          <text class="banner-emoji">📖</text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-actions">
+    <view class="quick-action-item" wx:for="{{quickActions}}" wx:key="id" data-id="{{item.id}}" bindtap="onQuickAction">
+      <view class="quick-action-icon" style="background: {{item.color}}15;">
+        <text class="quick-action-emoji">{{item.icon}}</text>
+      </view>
+      <text class="quick-action-name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 分类导航 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">📚 分类导航</text>
+    </view>
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="name" data-category="{{item.name}}" bindtap="onCategoryTap">
+        <text class="category-icon">{{item.icon}}</text>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐图书 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">✨ 为你推荐</text>
+      <text class="section-more" bindtap="onMoreBooks">更多 ›</text>
+    </view>
+    <scroll-view scroll-x class="recommend-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="recommend-list">
+        <view class="recommend-item" wx:for="{{recommendBooks}}" wx:key="id">
+          <book-card book="{{item}}" mode="grid" bind:booktap="onBookTap" />
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 最新上架 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">🆕 最新上架</text>
+      <text class="section-more" bindtap="onMoreBooks">更多 ›</text>
+    </view>
+    <view class="new-books-grid">
+      <view class="new-book-item" wx:for="{{newBooks}}" wx:key="id">
+        <book-card book="{{item}}" mode="grid" bind:booktap="onBookTap" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 热门笔记 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">🔥 热门笔记</text>
+      <text class="section-more" bindtap="onMoreNotes">更多 ›</text>
+    </view>
+    <view class="hot-notes">
+      <view class="hot-note-card" wx:for="{{hotNotes}}" wx:key="id" data-id="{{item.id}}" bindtap="onNoteTap">
+        <view class="hot-note-header">
+          <image class="hot-note-cover" src="{{item.bookCover || '/images/book-default.png'}}" mode="aspectFill" />
+          <view class="hot-note-info">
+            <text class="hot-note-title text-ellipsis">{{item.title}}</text>
+            <text class="hot-note-book text-ellipsis">《{{item.bookTitle}}》</text>
+          </view>
+        </view>
+        <text class="hot-note-content text-ellipsis-2">{{item.content}}</text>
+        <view class="hot-note-footer">
+          <text class="hot-note-author">{{item.userName}}</text>
+          <view class="hot-note-stats">
+            <text class="stat-icon">❤️ {{item.likes}}</text>
+            <text class="stat-icon">💬 {{item.comments}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer-tip">
+    <text>— 阳光读书 · 让阅读更美好 —</text>
+  </view>
+
+</view>

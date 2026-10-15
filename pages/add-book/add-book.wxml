@@ -1,0 +1,221 @@
+<!-- pages/add-book/add-book.wxml - 录入图书 -->
+<view class="page">
+
+  <!-- ===== 基本信息 ===== -->
+  <view class="section-title">基本信息</view>
+  <view class="form-card">
+    <!-- 书房 -->
+    <view class="form-item">
+      <text class="form-label">书房</text>
+      <picker mode="selector" range="{{rooms}}" range-key="name" bindchange="onRoomChange">
+        <view class="form-value">
+          <text class="value-text">{{rooms[roomIndex].name || '请选择书房'}}</text>
+          <text class="arrow">∨</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- ISBN + 扫码 -->
+    <view class="form-item">
+      <text class="form-label">ISBN</text>
+      <input class="form-input right" placeholder="请输入ISBN" placeholder-class="ph"
+             value="{{form.isbn}}" data-field="isbn" bindinput="onInput" bindblur="onIsbnBlur" />
+      <view class="scan-btn" bindtap="onScanIsbn">
+        <text class="scan-icon">⌗</text>
+      </view>
+    </view>
+    <view class="field-hint">
+      {{lookingUp ? '正在根据ISBN获取图书信息...' : '系统会根据ISBN自动获取图书信息'}}
+    </view>
+
+    <!-- 书名 -->
+    <view class="form-item">
+      <text class="form-label">书名 <text class="required">*</text></text>
+      <input class="form-input right" placeholder="请输入书名" placeholder-class="ph"
+             value="{{form.title}}" data-field="title" bindinput="onInput" />
+    </view>
+
+    <!-- 作者 -->
+    <view class="form-item">
+      <text class="form-label">作者 <text class="required">*</text></text>
+      <input class="form-input right" placeholder="请输入作者" placeholder-class="ph"
+             value="{{form.author}}" data-field="author" bindinput="onInput" />
+    </view>
+
+    <!-- 分类 -->
+    <view class="form-item">
+      <text class="form-label">分类</text>
+      <picker mode="selector" range="{{categories}}" range-key="name" bindchange="onCategoryChange">
+        <view class="form-value">
+          <text class="value-text">{{categories[categoryIndex].name}}</text>
+          <text class="arrow">∨</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 封面 -->
+    <view class="form-item" bindtap="onChooseCover">
+      <text class="form-label">封面</text>
+      <view class="form-value">
+        <image wx:if="{{form.cover}}" class="cover-thumb" src="{{form.cover}}" mode="aspectFill" />
+        <text wx:else class="ph">未设置</text>
+        <text class="arrow-next">›</text>
+      </view>
+    </view>
+
+    <!-- 标签 -->
+    <view class="form-item" bindtap="toggleTagPanel">
+      <text class="form-label">标签</text>
+      <view class="form-value">
+        <text class="value-text {{selectedTags.length ? '' : 'ph'}}">
+          {{selectedTags.length ? selectedTags : '请选择标签'}}
+        </text>
+        <text class="arrow-next">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 藏书信息 ===== -->
+  <view class="section-title" bindtap="toggleStock">
+    藏书信息 <text class="collapse-arrow">{{stockOpen ? '∧' : '∨'}}</text>
+  </view>
+  <view class="form-card" wx:if="{{stockOpen}}">
+    <!-- 藏书类型 -->
+    <view class="form-item">
+      <text class="form-label">藏书类型</text>
+      <picker mode="selector" range="{{typeOptions}}" value="{{typeIndex}}" bindchange="onTypeChange">
+        <view class="form-value">
+          <text class="value-text">{{typeOptions[typeIndex]}}</text>
+          <text class="arrow">∨</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 纸质书：编号 / 位置 / 备注 -->
+    <block wx:if="{{typeIndex === 0}}">
+      <view class="form-item">
+        <text class="form-label">编号</text>
+        <input class="form-input right" placeholder="请扫码或填写编号" placeholder-class="ph"
+               value="{{form.code}}" data-field="code" bindinput="onInput" />
+        <view class="scan-btn" bindtap="onScanCode">
+          <text class="scan-icon">⌗</text>
+        </view>
+      </view>
+      <view class="form-item">
+        <text class="form-label">位置</text>
+        <input class="form-input right" placeholder="请填写位置" placeholder-class="ph"
+               value="{{form.location}}" data-field="location" bindinput="onInput" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <input class="form-input right" placeholder="请填写备注" placeholder-class="ph"
+               value="{{form.remark}}" data-field="remark" bindinput="onInput" />
+      </view>
+    </block>
+
+    <!-- 电子书：上传文件 / 备注 -->
+    <block wx:else>
+      <view class="form-item">
+        <text class="form-label">电子书 <text class="required">*</text></text>
+        <view class="form-value" wx:if="{{!ebook}}">
+          <view class="upload-btn" bindtap="onChooseFile">上传文件</view>
+        </view>
+        <view class="file-info" wx:else bindtap="onChooseFile">
+          <text class="file-name">📄 {{ebook.name}}</text>
+          <text class="file-size">{{ebook.sizeText}}</text>
+          <text class="file-remove" catchtap="onRemoveFile">✕</text>
+        </view>
+      </view>
+      <view class="field-hint">支持epub、pdf、mobi、azw3格式，大小不超过100M</view>
+      <view class="form-item">
+        <text class="form-label">备注</text>
+        <input class="form-input right" placeholder="请填写备注" placeholder-class="ph"
+               value="{{form.remark}}" data-field="remark" bindinput="onInput" />
+      </view>
+    </block>
+  </view>
+
+  <!-- ===== 出版信息 ===== -->
+  <view class="section-title" bindtap="togglePublish">
+    出版信息 <text class="collapse-arrow">{{publishOpen ? '∧' : '∨'}}</text>
+  </view>
+  <view class="form-card" wx:if="{{publishOpen}}">
+    <view class="form-item">
+      <text class="form-label">出版社</text>
+      <input class="form-input right" placeholder="请输入出版社" placeholder-class="ph"
+             value="{{form.publisher}}" data-field="publisher" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">出版时间</text>
+      <input class="form-input right" placeholder="如 2021-01" placeholder-class="ph"
+             value="{{form.publishDate}}" data-field="publishDate" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">页数</text>
+      <input class="form-input right" type="number" placeholder="请输入页数" placeholder-class="ph"
+             value="{{form.pages}}" data-field="pages" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">定价</text>
+      <input class="form-input right" type="digit" placeholder="请输入定价（元）" placeholder-class="ph"
+             value="{{form.price}}" data-field="price" bindinput="onInput" />
+    </view>
+    <view class="form-item form-item-textarea">
+      <text class="form-label">简介</text>
+      <textarea class="form-textarea" placeholder="请输入简介（ISBN可自动获取）"
+                value="{{form.description}}" data-field="description" bindinput="onInput"
+                maxlength="500" auto-height />
+    </view>
+  </view>
+
+  <!-- ===== 扩展字段（由管理端「登记字段」定义）===== -->
+  <block wx:if="{{customFields.length}}">
+    <view class="section-title">扩展字段</view>
+    <view class="form-card">
+      <view class="form-item" wx:for="{{customFields}}" wx:key="id">
+        <text class="form-label">{{item.name}}<text class="req" wx:if="{{item.required}}">*</text></text>
+        <switch wx:if="{{item.type === '开关'}}"
+                checked="{{item.value}}"
+                color="#B4232A"
+                data-index="{{index}}"
+                bindchange="onCustomSwitch" />
+        <input wx:else
+               class="form-input right"
+               type="{{item.type === '数字' ? 'digit' : 'text'}}"
+               placeholder="请填写{{item.name}}"
+               placeholder-class="ph"
+               value="{{item.value}}"
+               data-index="{{index}}"
+               bindinput="onCustomInput" />
+      </view>
+    </view>
+  </block>
+
+  <!-- ===== 确定 ===== -->
+  <view class="btn-submit {{saving ? 'disabled' : ''}}" bindtap="onSave">
+    {{saving ? '保存中...' : '确定'}}
+  </view>
+
+  <!-- 录入后自动扫码 -->
+  <view class="auto-scan-row">
+    <text class="auto-scan-label">录入后自动扫码：</text>
+    <switch checked="{{autoScan}}" color="#B4232A" bindchange="onAutoScanChange" />
+  </view>
+
+  <!-- ===== 标签多选弹层 ===== -->
+  <view class="mask" wx:if="{{showTagPanel}}" bindtap="toggleTagPanel">
+    <view class="tag-panel" catchtap="onStopPropagation">
+      <view class="tag-panel-title">选择标签</view>
+      <view class="tag-chips">
+        <view class="tag-chip {{selectedTags.indexOf(item.name) >= 0 ? 'active' : ''}}"
+              wx:for="{{tags}}" wx:key="id"
+              style="{{selectedTags.indexOf(item.name) >= 0 ? 'background:' + item.color + ';border-color:' + item.color : 'color:' + item.color + ';border-color:' + item.color}}"
+              data-name="{{item.name}}" bindtap="onTagToggle">
+          {{item.name}}
+        </view>
+      </view>
+      <view class="tag-panel-confirm" bindtap="confirmTags">确定</view>
+    </view>
+  </view>
+
+</view>

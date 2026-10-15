@@ -1,0 +1,64 @@
+<!-- pages/borrow/borrow.wxml -->
+<view class="page">
+
+  <!-- 统计卡片 -->
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.total}}</text>
+      <text class="stat-label">总借阅</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-primary">{{stats.active}}</text>
+      <text class="stat-label">借阅中</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-danger">{{stats.overdue}}</text>
+      <text class="stat-label">已逾期</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num text-success">{{stats.returned}}</text>
+      <text class="stat-label">已归还</text>
+    </view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.key ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="key" data-key="{{item.key}}" bindtap="onTabTap">
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 借阅列表 -->
+  <view class="borrow-list">
+    <empty-state wx:if="{{borrowList.length === 0}}" icon="📚" text="暂无借阅记录" subText="去书库找本好书吧" />
+
+    <view class="borrow-card" wx:for="{{borrowList}}" wx:key="id">
+      <view class="borrow-card-header" data-bookid="{{item.bookId}}" bindtap="onBookTap">
+        <image class="borrow-book-cover" src="{{item.bookCover || '/images/book-default.png'}}" mode="aspectFill" />
+        <view class="borrow-book-info">
+          <text class="borrow-book-title text-ellipsis">{{item.bookTitle}}</text>
+          <view class="borrow-dates">
+            <text class="borrow-date-item">借：{{item.borrowDateFormatted}}</text>
+            <text class="borrow-date-item">还：{{item.dueDateFormatted}}</text>
+          </view>
+          <view class="borrow-status-row">
+            <text class="borrow-status-tag {{item.overdue ? 'overdue' : (item.status === 'returned' ? 'returned' : 'active')}}">
+              {{item.daysLeftText}}
+            </text>
+            <text class="borrow-fine" wx:if="{{item.fineText}}">{{item.fineText}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="borrow-card-footer">
+        <text class="return-date" wx:if="{{item.status === 'returned'}}">归还于 {{item.returnDateFormatted}}</text>
+        <view class="btn btn-warning btn-sm" wx:if="{{item.status === 'borrowed'}}" data-id="{{item.id}}" data-title="{{item.bookTitle}}" catchtap="onReturn">
+          <text>归还</text>
+        </view>
+        <view class="btn btn-ghost btn-sm" wx:if="{{item.status === 'returned'}}" data-bookid="{{item.bookId}}" catchtap="onBookTap">
+          <text>查看图书</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

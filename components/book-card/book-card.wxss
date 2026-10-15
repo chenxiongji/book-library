@@ -1,0 +1,152 @@
+/* components/book-card/book-card.wxss */
+
+.book-card {
+  position: relative;
+}
+
+/* 置顶角标（左上角） */
+.top-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 4rpx 14rpx;
+  border-radius: 16rpx 0 16rpx 0;
+  font-size: 20rpx;
+  font-weight: 600;
+  background: #EF4444;
+  color: #FFF;
+  line-height: 1.4;
+}
+
+/* 网格模式 */
+.book-card--grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.book-cover-wrap {
+  position: relative;
+  width: 100%;
+  height: 280rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  background: #F3F4F6;
+}
+
+.book-cover {
+  width: 100%;
+  height: 100%;
+}
+
+.book-status {
+  position: absolute;
+  top: 12rpx;
+  right: 12rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.book-status.borrowed {
+  background: rgba(239, 68, 68, 0.9);
+  color: #FFF;
+}
+
+.book-type-badge {
+  position: absolute;
+  bottom: 12rpx;
+  left: 12rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+  background: rgba(245, 158, 11, 0.9);
+  color: #FFF;
+}
+
+.book-info {
+  padding: 12rpx 4rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.book-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1F2937;
+  line-height: 1.4;
+}
+
+.book-author {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}
+
+.book-meta {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 4rpx;
+}
+
+.format-badge {
+  font-size: 20rpx;
+  color: #6B7280;
+  background: #F3F4F6;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
+  text-transform: uppercase;
+}
+
+/* 列表模式 */
+.book-card--list {
+  display: flex;
+  gap: 20rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.book-cover-list {
+  width: 120rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #F3F4F6;
+}
+
+.book-info-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.book-meta-list {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  flex-wrap: wrap;
+}
+
+.book-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-text {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.location-text {
+  font-size: 22rpx;
+  color: #9CA3AF;
+}

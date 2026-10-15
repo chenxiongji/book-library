@@ -1,0 +1,39 @@
+<!-- pages/profile-edit/profile-edit.wxml - 编辑个人资料 -->
+<view class="page">
+
+  <!-- 头像 -->
+  <view class="avatar-section" bindtap="onChooseAvatar">
+    <view class="avatar-wrap">
+      <image wx:if="{{form.avatar}}" class="avatar-img" src="{{form.avatar}}" mode="aspectFill" />
+      <view wx:else class="avatar-placeholder">
+        <text>{{form.name ? form.name[0] : '书'}}</text>
+      </view>
+      <view class="avatar-camera">
+        <text>📷</text>
+      </view>
+    </view>
+    <text class="avatar-tip">点击更换头像</text>
+  </view>
+
+  <!-- 表单 -->
+  <view class="form-card">
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input class="form-input" placeholder="请输入昵称" maxlength="20"
+             value="{{form.name}}" data-field="name" bindinput="onInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input class="form-input" type="number" placeholder="请输入手机号" maxlength="11"
+             value="{{form.phone}}" data-field="phone" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="form-tip">修改后立即生效，头像与昵称将展示在个人主页与笔记中</view>
+
+  <!-- 保存 -->
+  <view class="btn-save {{saving ? 'disabled' : ''}}" bindtap="onSave">
+    {{saving ? '保存中...' : '保存'}}
+  </view>
+
+</view>
